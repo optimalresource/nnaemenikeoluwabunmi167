@@ -1,0 +1,160 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+      <div class="card-header">
+        <p class="card-title font-large-1">Add Patrol Member</p>
+        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements">
+          <ul class="list-inline mb-0">
+            <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+            <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+            <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-content collpase " [ngClass]="_toggleCollapse ? 'show' : ''">
+        <div class="card-body">
+          <form class="form form-horizontal striped-rows form-bordered" [formGroup]="patrolTeamForm" (submit)="submit()">
+            <div class="form-body">
+              <h4 class="form-section"></h4>
+              <!-- Loading and Internet Error -->
+              <caption>
+                <div class="move-to-center">
+                  <!-- ALTERNATIVE LOADING ICON -->
+                  <div *ngIf="!_patrolMembers && !_branches && !_stopLoading" class="loading">
+                    <div class="blockUI" style="display:none"></div>
+                    <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                    <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                      <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                    </div>
+                  </div>
+                </div>
+              </caption>
+              <!--/End Loading and Internet Error -->
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput7">Team Name</label>
+                <div class="col-md-6">
+                  <input type="text" formControlName="teamName" id="teamName" class="form-control" placeholder="Team Name" name="teamName">
+                </div>
+                <!-- Validation Message -->
+                <div *ngIf="(patrolTeamForm.controls['teamName']?.errors?.required && (patrolTeamForm.controls['teamName']?.touched || patrolTeamForm.controls['teamName']?.dirty))"
+                  class="errorRed invalid animated wobble">
+                  Required.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['teamName']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                  Minimum Length is 3.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['teamName']?.valid)" class="successGreen valid animated flash">
+                  OK.
+                </div>
+                <!--/End Validation Message -->
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput7">Team Head</label>
+                <div class="col-md-6">
+                  <select id="projectinput6" formControlName="teamHead" name="teamHead" class="form-control">
+                    <option value="" selected="" disabled="">Select the Team Lead</option>
+                    <option value="{{_patrolMember.id}}" *ngFor="let _patrolMember of _patrolMembers">{{_patrolMember.firstName}} {{_patrolMember.surname}} --- {{_patrolMember.position}}</option>
+                  </select>
+                </div>
+                <!-- Validation Message -->
+                <div *ngIf="(patrolTeamForm.controls['teamHead']?.errors?.required && (patrolTeamForm.controls['teamHead']?.touched || patrolTeamForm.controls['teamHead']?.dirty))"
+                  class="errorRed invalid animated wobble">
+                  Required.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['teamHead']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                  Minimum Length is 3.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['teamHead']?.valid)" class="successGreen valid animated flash">
+                  OK.
+                </div>
+                <!--/End Validation Message -->
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput7">Police One</label>
+                <div class="col-md-6">
+                  <select id="projectinput6" formControlName="policeOne" name="policeOne" class="form-control">
+                    <option value="" selected="" disabled="">Select the First Police</option>
+                    <option value="{{_patrolMember.id}}" *ngFor="let _patrolMember of _patrolMembers">{{_patrolMember.firstName}} {{_patrolMember.surname}} --- {{_patrolMember.position}}</option>
+                  </select>
+                </div>
+                <!-- Validation Message -->
+                <div *ngIf="(patrolTeamForm.controls['policeOne']?.errors?.required && (patrolTeamForm.controls['policeOne']?.touched || patrolTeamForm.controls['policeOne']?.dirty))"
+                  class="errorRed invalid animated wobble">
+                  Required.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['policeOne']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                  Minimum Length is 3.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['policeOne']?.valid)" class="successGreen valid animated flash">
+                  OK.
+                </div>
+                <!--/End Validation Message -->
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput7">Police Two</label>
+                <div class="col-md-6">
+                  <select id="projectinput6" formControlName="policeTwo" name="policeTwo" class="form-control">
+                    <option value="" selected="" disabled="">Select a Second Police</option>
+                    <option value="{{_patrolMember.id}}" *ngFor="let _patrolMember of _patrolMembers">{{_patrolMember.firstName}} {{_patrolMember.surname}} --- {{_patrolMember.position}}</option>
+                  </select>
+                </div>
+                <!-- Validation Message -->
+                <div *ngIf="(patrolTeamForm.controls['policeTwo']?.errors?.required && (patrolTeamForm.controls['policeTwo']?.touched || patrolTeamForm.controls['policeTwo']?.dirty))"
+                  class="errorRed invalid animated wobble">
+                  Required.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['policeTwo']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                  Minimum Length is 3.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['policeTwo']?.valid)" class="successGreen valid animated flash">
+                  OK.
+                </div>
+                <!--/End Validation Message -->
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput7">Branch</label>
+                <div class="col-md-6">
+                  <select id="projectinput6" formControlName="branch" name="branch" class="form-control">
+                    <option value="" selected="" disabled="">Select Position</option>
+                    <option value="{{_branch.id}}" *ngFor="let _branch of _branches">{{_branch.name}}</option>
+                  </select>
+                </div>
+                <!-- Validation Message -->
+                <div *ngIf="(patrolTeamForm.controls['branch']?.errors?.required && (patrolTeamForm.controls['branch']?.touched || patrolTeamForm.controls['branch']?.dirty))"
+                  class="errorRed invalid animated wobble">
+                  Required.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['branch']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                  Minimum Length is 3.
+                </div>
+                <div *ngIf="(patrolTeamForm.controls['branch']?.valid)" class="successGreen valid animated flash">
+                  OK.
+                </div>
+                <!--/End Validation Message -->
+              </div>
+
+            </div>
+            <!-- form buttons -->
+            <div class="form-actions">
+              <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                  <i class="ft-x"></i> Close
+                  </button>
+              <button type="submit" [disabled]="patrolTeamForm.invalid" class="btn btn-primary">
+                      <i class="la la-check-square-o"></i> Save Patrol Member
+                  </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<toaster-container [toasterconfig]="config1"></toaster-container>

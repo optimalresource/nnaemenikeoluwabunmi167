@@ -1,0 +1,385 @@
+<div>
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" *ngIf="patrolMemberData">
+              <div class="align-self-center">
+                <span class="card-profile-image img"><img class="image" src="data:image/png;base64,{{patrolMemberData.image}}" onerror="this.src='assets/icons/avatar-large.jpg'" alt="avatar"></span>
+              </div>
+              <div class="media-body">
+                <h4>{{patrolMemberData.firstName}} {{patrolMemberData.surname}}</h4>
+                <span>{{patrolMemberData.position}}</span>
+              </div>
+              <div class="align-self-center">
+                <h1>{{patrolMemberData.staffId}}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" style="width:auto" (click)="goBack()">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close this Profile</h2>
+                </div>
+                <div class="align-self-center">
+                  <i class="la la-close font-large-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Patrol Member Details</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!patrolMemberData && !_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; patrolMember: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; patrolMember: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="patrolMemberData">
+                  <tr>
+                    <td class="mtn-yellow-bg">First Name</td>
+                    <td>{{patrolMemberData.firstName}}</td>
+                    <td class="mtn-yellow-bg">Last Name</td>
+                    <td>{{patrolMemberData.surname}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Other Names</td>
+                    <td>{{patrolMemberData.otherName}}</td>
+                    <td class="mtn-yellow-bg">Position</td>
+                    <td>{{patrolMemberData.position}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Designation</td>
+                    <td>{{patrolMemberData.designation}}</td>
+                    <td class="mtn-yellow-bg">Email</td>
+                    <td>{{patrolMemberData.email}}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Phone Line 1</td>
+                    <td>{{patrolMemberData.number}}</td>
+                    <td class="mtn-yellow-bg">No. of Profile Updates</td>
+                    <td>{{patrolMemberData.updateCount}}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Staff ID</td>
+                    <td>{{patrolMemberData.staffId}}</td>
+                    <td class="mtn-yellow-bg">Gender</td>
+                    <td>{{patrolMemberData.gender}}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Home Address</td>
+                    <td>{{patrolMemberData.homeAddress}}</td>
+                    <td class="mtn-yellow-bg">Office Branch</td>
+                    <td>{{patrolMemberData.branch}}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Created By</td>
+                    <td>{{patrolMemberData.created_by}}</td>
+                    <td class="mtn-yellow-bg">Created At</td>
+                    <td>{{patrolMemberData.created_at}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content collpase " [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <form class="form form-horizontal striped-rows form-bordered" [formGroup]="patrolMemberForm" (submit)="submit()">
+              <div class="form-body">
+                <h4 class="form-section"></h4>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Staff ID</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="staffId" id="projectinput1" class="form-control" placeholder="Staff Id" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['staffId']?.errors?.required && (patrolMemberForm.controls['staffId']?.touched || patrolMemberForm.controls['staffId']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['staffId']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['staffId']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">First Name</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="firstName" id="projectinput1" class="form-control" placeholder="First Name" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['firstName']?.errors?.required && (patrolMemberForm.controls['firstName']?.touched || patrolMemberForm.controls['firstName']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['firstName']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['firstName']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Other Name</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="otherName" id="projectinput1" class="form-control" placeholder="Other Names" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['otherName']?.errors?.required && (patrolMemberForm.controls['otherName']?.touched || patrolMemberForm.controls['otherName']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['otherName']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['otherName']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Surname</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="surname" id="projectinput1" class="form-control" placeholder="Surname" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['surname']?.errors?.required && (patrolMemberForm.controls['surname']?.touched || patrolMemberForm.controls['surname']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['surname']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['surname']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Staff Image</label>
+                  <div class="col-md-6">
+                    <input type="file" formControlName="image" id="projectinput1" class="form-control" (change)="onFileSelected($event)" placeholder="image"
+                      name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['image']?.errors?.required && (patrolMemberForm.controls['image']?.touched || patrolMemberForm.controls['image']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['image']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Email</label>
+                  <div class="col-md-6">
+                    <input type="email" formControlName="email" id="projectinput1" class="form-control" placeholder="email" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['email']?.errors?.required && (patrolMemberForm.controls['email']?.touched || patrolMemberForm.controls['email']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['email']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['email']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Phone Number</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="number" id="projectinput1" class="form-control" placeholder="Number" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['number']?.errors?.required && (patrolMemberForm.controls['number']?.touched || patrolMemberForm.controls['number']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['number']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['number']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Designation</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="designation" id="projectinput1" class="form-control" placeholder="designation" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['designation']?.errors?.required && (patrolMemberForm.controls['designation']?.touched || patrolMemberForm.controls['designation']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['designation']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['designation']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Position</label>
+                  <div class="col-md-6">
+                    <select id="projectinput6" formControlName="position" name="position" class="form-control">
+                      <option value="" selected="" disabled="">Select Position</option>
+                      <option value="{{_position.id}}" *ngFor="let _position of _positions">{{_position.name}}</option>
+                    </select>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['position']?.errors?.required && (patrolMemberForm.controls['position']?.touched || patrolMemberForm.controls['position']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['position']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['position']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Branch</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="branch" id="projectinput1" class="form-control" placeholder="Branch" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['branch']?.errors?.required && (patrolMemberForm.controls['branch']?.touched || patrolMemberForm.controls['branch']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['branch']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['branch']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Home Address</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="homeAddress" id="projectinput1" class="form-control" placeholder="Home Address" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['homeAddress']?.errors?.required && (patrolMemberForm.controls['homeAddress']?.touched || patrolMemberForm.controls['homeAddress']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['homeAddress']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['homeAddress']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Gender</label>
+                  <div class="col-md-6">
+                    <select id="projectinput6" formControlName="gender" name="gender" class="form-control">
+                        <option value="" selected="" disabled="">Select Gender</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(patrolMemberForm.controls['gender']?.errors?.required && (patrolMemberForm.controls['gender']?.touched || patrolMemberForm.controls['gender']?.dirty))"
+                    class="errorRed invalid animated bounceIn">
+                    Required.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['gender']?.errors?.minlength)" class="errorRed invalid animated bounceIn">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(patrolMemberForm.controls['gender']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+              </div>
+              <!-- form buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                    <i class="ft-x"></i> Close
+                    </button>
+                <button type="submit" [disabled]="patrolMemberForm.invalid" class="btn btn-primary">
+                        <i class="la la-check-square-o"></i> Save Patrol Member
+                    </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

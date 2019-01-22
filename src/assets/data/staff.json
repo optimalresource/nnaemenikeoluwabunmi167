@@ -1,0 +1,62 @@
+[
+    {
+        "id": "34242342",
+        "staffId": "AD-6578",
+        "staffFirstName": "Joseph",
+        "staffSurname": "Okafor",
+        "staffOtherName": "Chidiebere",
+        "staffImage": "assets/data/img/avatar5.png",
+        "staffEmail": "josephilo2001@yahoo.com",
+        "staffNumber": "09053691527",
+        "staffDesignation": "Security",
+        "staffDeparment": "Security Unit",
+        "staffBranch": "Falomo",
+        "staffHomeAddress": "Elemoro, Ibeju-Lekki,",
+        "staffGender": "Male"
+    },
+    {
+        "id": "38642342",
+        "staffId": "AD-6678",
+        "staffFirstName": "Mary",
+        "staffSurname": "Dan",
+        "staffOtherName": "Bose",
+        "staffImage": "assets/data/img/avatar7.png",
+        "staffEmail": "josephilo2001@yahoo.com",
+        "staffNumber": "09053691527",
+        "staffDesignation": "Security",
+        "staffDeparment": "Security Unit",
+        "staffBranch": "Falomo",
+        "staffHomeAddress": "Elemoro, Ibeju-Lekki,",
+        "staffGender": "Female"
+    },
+    {
+        "id": "342347822",
+        "staffId": "AD-6778",
+        "staffFirstName": "Fatima",
+        "staffSurname": "Usuf",
+        "staffOtherName": "Shilla",
+        "staffImage": "assets/data/img/avatar6.png",
+        "staffEmail": "josephilo2001@yahoo.com",
+        "staffNumber": "09053691527",
+        "staffDesignation": "Security",
+        "staffDeparment": "Security Unit",
+        "staffBranch": "Falomo",
+        "staffHomeAddress": "Elemoro, Ibeju-Lekki,",
+        "staffGender": "Female"
+    },
+    {
+        "id": "344368542",
+        "staffId": "AD-6878",
+        "staffFirstName": "Ogochukwu",
+        "staffSurname": "Ona",
+        "staffOtherName": "Judith",
+        "staffImage": "assets/data/img/avatar4.png",
+        "staffEmail": "josephilo2001@yahoo.com",
+        "staffNumber": "09053691527",
+        "staffDesignation": "Security",
+        "staffDeparment": "Security Unit",
+        "staffBranch": "Falomo",
+        "staffHomeAddress": "Elemoro, Ibeju-Lekki,",
+        "staffGender": "Female"
+    }
+]

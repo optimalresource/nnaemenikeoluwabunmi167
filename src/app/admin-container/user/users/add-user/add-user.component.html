@@ -1,0 +1,116 @@
+<div style="padding-bottom: 200px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <p class="card-title font-large-1">Add User</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+              <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+              <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-content collpase show">
+          <div class="card-body">
+            <form class="form form-horizontal striped-rows form-bordered" [formGroup]="userForm" (submit)="submit()">
+              <div class="form-body">
+                <h4 class="form-section"></h4>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="userName">Username</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="userName" id="projectinput1" class="form-control" placeholder="User Name" name="userName">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(userForm.controls['userName'].errors?.required && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(userForm.controls['userName'].errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(userForm.controls['userName'].valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="password">Password</label>
+                  <div class="col-md-6">
+                    <input type="password" formControlName="password" id="projectinput1" class="form-control" placeholder="Password" name="password">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(userForm.controls['password'].errors?.required && (userForm.controls['password'].touched || userForm.controls['password'].dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(userForm.controls['password'].errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(userForm.controls['password'].valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="staffId">Staff ID:</label>
+                  <div class="col-md-6">
+                    <input type="password" formControlName="staffId" id="staffId" class="form-control" placeholder="Staff Id" name="staffId">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(userForm.controls['staffId']?.errors?.required && (userForm.controls['staffId']?.touched || userForm.controls['staffId']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(userForm.controls['staffId'].errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(userForm.controls['staffId']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="roleId">Role ID:</label>
+                <div class="col-md-6">
+                  <select id="roleId" formControlName="roleId" name="roleId" class="form-control">
+                      <option value="" selected="" disabled="">Choose an option</option>
+                      <option value="{{role.id}}" *ngFor="let role of _roles">{{role.id}}</option>
+                    </select>
+                </div>
+                <!-- Validation Message -->
+                <div *ngIf="(userForm.controls['roleId']?.errors?.required && (userForm.controls['roleId']?.touched || userForm.controls['roleId']?.dirty))"
+                  class="errorRed invalid animated wobble">
+                  Required.
+                </div>
+                <div *ngIf="(userForm.controls['roleId']?.valid)" class="successGreen valid animated flash">
+                  OK.
+                </div>
+                <!--/End Validation Message -->
+              </div>
+
+              <!-- form buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                <i class="ft-x"></i> Close
+                </button>
+                <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
+                    <i class="la la-check-square-o"></i> Save User
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

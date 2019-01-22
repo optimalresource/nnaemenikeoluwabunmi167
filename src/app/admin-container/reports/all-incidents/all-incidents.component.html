@@ -1,0 +1,460 @@
+<div style="padding-bottom: 300px">
+  <div class="row">
+    <div class="col-xl-4 col-md-5">
+      <div class="card">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <div class="font-medium-2">Filter:</div>
+                <!-- BUTTON -->
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button class="btn btn-warning round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{SearchBy}}</button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" (click)="filterBy('All Incidents')">All Incidents</a>
+                    <a class="dropdown-item" (click)="filterBy('Incident Search')">Incident Search</a>
+                    <a class="dropdown-item" (click)="filterBy('Open Incidents')">Open Incidents</a>
+                    <a class="dropdown-item" (click)="filterBy('Closed Incidents')">Closed Incidents</a>
+                    <a class="dropdown-item" (click)="filterBy('With Casuality')">With Casuality</a>
+                    <a class="dropdown-item" (click)="filterBy('Casuality Level')">Casuality Level</a>
+                    <a class="dropdown-item" (click)="filterBy('3rd Party Caller')">3rd Party Caller</a>
+                    <a class="dropdown-item" (click)="filterBy('Has Patrol Team')">Has Patrol Team</a>
+                    <a class="dropdown-item" (click)="filterBy('Incident Type')">Incident Type</a>
+                    <a class="dropdown-item" (click)="filterBy('Day of Incident')">Day of Incident</a>
+                    <a class="dropdown-item" (click)="filterBy('Month of Incident')">Month of Incident</a>
+                    <a class="dropdown-item" (click)="filterBy('Year of Incident')">Year of Incident</a>
+                    <a class="dropdown-item" (click)="filterBy('Year Range')">Year Range</a>
+                    <a class="dropdown-item" (click)="filterBy('Date Range')">Date Range</a>
+                    <!-- <a class="dropdown-item" (click)="filterBy('Create By')">Create By</a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 col-md-7">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECONDARY FILTERS & SEARCH BAR -->
+
+  <!-- Search and All It's Filters -->
+  <div class="row" *ngIf="_incidentSearch">
+    <div class="col-xl-6 col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="col-xl-12 col-md-12 col-sm-12">
+                <fieldset class="form-group position-relative">
+                  <input type="text" (keyup)="searchTerm$.next($event.target.value)" class="form-control round" id="iconLeft10" placeholder="Search Out Incident">
+                  <div class="form-control-position">
+                  </div>
+                </fieldset>
+              </div>
+
+            </div>
+            <!-- SECONDARY SEARCH FILTERS -->
+            <div class="media align-items-stretch">
+              <div class="col-xl-6 col-md-6 hidden-filter">
+                <div class="search-filter">
+                  <!-- <div class="font-medium-2">Filter:</div> -->
+                  <!-- BUTTON -->
+                  <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin: 15px 0 !important;">
+                    <button class="btn btn-warning round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{SearchByTwo}}</button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                      <a class="dropdown-item" (click)="filterByTwo('Has Casualty')">Has Casualty</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Casualty Level')">Casualty Level</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Incident Type')">Incident Type</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Patrol Supervisor')">Patrol Supervisor</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Particular Day')">Particular Day</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Particular Month')">Particular Month</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Particular Year')">Particular Year</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Year Range')">Year Range</a>
+                      <a class="dropdown-item" (click)="filterByTwo('Date Range')">Date Range</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-md-6  hidden-filter">
+                <div class="search-filter">
+                  <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin: 15px 0 !important;">
+                    <button class="btn btn-warning round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{SearchByThree}}</button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                      <a class="dropdown-item" (click)="filterByThree('None')">None</a>
+                      <a *ngIf="!((SearchByTwo == 'Casualty Level') || (SearchByTwo == 'Has Casualty'))" class="dropdown-item" (click)="filterByThree('Has Casualty')">Has Casualty</a>
+                      <a class="dropdown-item" (click)="filterByThree('3rd Party Caller')">3rd Party Caller</a>
+                      <a *ngIf="SearchByTwo != 'Patrol Supervisor'" class="dropdown-item" (click)="filterByThree('Patrol Supervisor')">Patrol Supervisor</a>
+                      <a *ngIf="this.SearchByTwo != 'Incident Type'" class="dropdown-item" (click)="filterByThree('Incident Type')">Incident Type</a>
+                      <a *ngIf="!((SearchByTwo == 'Casualty Level') || (SearchByTwo == 'Has Casualty'))" class="dropdown-item" (click)="filterByThree('Casualty Level')">Casualty Level</a>
+                      <!-- <a class="dropdown-item" (click)="filterByThree('Created By')">Created By</a> -->
+                      <span *ngIf="!((this.SearchByTwo == 'Particular Day') || (this.SearchByTwo == 'Particular Month') || (this.SearchByTwo == 'Particular Year') || (this.SearchByTwo == 'Year Range') || (this.SearchByTwo == 'Date Range'))">
+                        <a  class="dropdown-item" (click)="filterByThree('Particular Day')">Particular Day</a>
+                        <a class="dropdown-item" (click)="filterByThree('Particular Month')">Particular Month</a>
+                        <a class="dropdown-item" (click)="filterByThree('Particular Year')">Particular Year</a>
+                        <a class="dropdown-item" (click)="filterByThree('Year Range')">Year Range</a>
+                        <a class="dropdown-item" (click)="filterByThree('Date Range')">Date Range</a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/END SECONDARY SEARCH FILTERS -->
+
+            <!-- TETIARY SEARCH FILTERS -->
+            <!-- This determines if the tetiary filter will be visible -->
+            <div *ngIf="_dateRangeSearch || _yearRangeSearch || _yearOfIncidentSearch || _monthOfIncidentSearch || _dayOfIncidentSearch || _incidentTypeSearch || _casualityLevelSearch || _hasPatrolTeamSearch">
+              <div class="tetiary-title  hidden-filter">
+                <span>
+                  <span *ngIf="((this.SearchByTwo == 'Particular Day') || (this.SearchByTwo == 'Particular Month') || (this.SearchByTwo == 'Particular Year') || (this.SearchByTwo == 'Year Range') || (this.SearchByTwo == 'Date Range') || (this.SearchByTwo == 'Casualty Level') || (this.SearchByTwo == 'Incident Type') || (this.SearchByTwo == 'Patrol Supervisor'))"  class="font-medium-4" style="margin-bottom:0px !important; padding-left: 0px"><img src="assets/icons/arrow-yellow.png" alt="">{{SearchByTwo}}</span>
+                </span>
+                <span>
+                  <span *ngIf="!((this.SearchByTwo == 'Particular Day') || (this.SearchByTwo == 'Particular Month') || (this.SearchByTwo == 'Particular Year') || (this.SearchByTwo == 'Year Range') || (this.SearchByTwo == 'Date Range') || (this.SearchByTwo == 'Casualty Level') || (this.SearchByTwo == 'Incident Type') || (this.SearchByTwo == 'Patrol Supervisor'))" class="font-medium-4" style="margin-bottom:0px !important; padding-left: 0px"><img src="assets/icons/arrow-yellow.png" alt="">{{SearchByThree}}</span>
+                </span>
+              </div>
+
+              <form class="form  hidden-filter" [formGroup]="incidentControlFormSearch">
+                <div class="tetiary-filters">
+                  <div class="media align-items-stretch" *ngIf="_incidentTypeSearch">
+                    <!-- <span class="font-medium-2" style="margin-bottom:0px !important">Select Incident Type</span> -->
+                    <div class="col-xl-12 col-md-12">
+                      <select id="incidentType" formControlName="incidentTypeSearch" (change)="setGenericIncidentTypeSearch($event)" name="incidentType"
+                        class="form-control" style="margin-top:5px !important">
+                    <option value="" selected="" disabled="">Incident Type</option>
+                    <option value="{{incidentType.id}}" *ngFor="let incidentType of _incidentTypes.reponse.responseData">{{incidentType.name}}</option>
+                  </select>
+                    </div>
+                  </div>
+
+                  <div class="media align-items-stretch" *ngIf="_casualityLevelSearch">
+                    <!-- <span class="font-medium-2" style="margin-bottom:0px !important">Select Casuality Level</span> -->
+                    <div class="col-xl-12 col-md-12">
+                      <select id="casualtyLevel" (change)="setGenericCasualtyLevelSearch($event)" formControlName="casualtyLevelSearch" name="casualtyLevel"
+                        class="form-control" style="margin-top:5px !important">
+                    <option value="" selected="" disabled="">Casuality Level</option>
+                    <option value="{{casualtyLevel.id}}" *ngFor="let casualtyLevel of _casualtyLevels.reponse.responseData">{{casualtyLevel.level}}</option>
+                  </select>
+                    </div>
+                  </div>
+
+                  <div class="media align-items-stretch" *ngIf="_yearOfIncidentSearch || _monthOfIncidentSearch || _dayOfIncidentSearch">
+                    <!-- <span class="font-medium-2" style="margin-bottom:0px !important">Select Date</span> -->
+                    <div class="col-xl-12 col-md-12">
+                      <mat-form-field style=" position:relative; width:100%">
+                        <input class="form-control" formControlName="dayOfIncidentSearch" (dateChange)="setGenericDOISearch($event)" id="animate"
+                          placeholder="Select from Calendar" matInput [matDatepicker]="dp3" style="padding-left: 40px;">
+                        <mat-datepicker-toggle matSuffix [for]="dp3" style="position:absolute;bottom:15px;left:5px;"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <!-- Patrol Team Supervisor Level -->
+                  <div class="media align-items-stretch" *ngIf="_hasPatrolTeamSearch">
+                    <div class="col-xl-12 col-md-12">
+                      <select id="patrolSupervisorSearch" (change)="setGenericPatrolSupervisorSearch($event)" formControlName="patrolSupervisorSearch"
+                        name="patrolSupervisorSearch" class="form-control" style="margin-top:5px !important">
+                  <option value="" selected="" disabled="">Choose Supervisor</option>
+                  <option value="{{patrolMember.id}}" *ngFor="let patrolMember of _patrolMembers.reponse.responseData">{{patrolMember.firstName}} {{patrolMember.surname}} --- {{patrolMember.position}}</option>
+                </select>
+                    </div>
+                  </div>
+
+                  <div class="media align-items-stretch" *ngIf="_dateRangeSearch || _yearRangeSearch">
+                    <div class="col-md-6 col-sm-6">
+                      <mat-form-field style=" position:relative; width:100%">
+                        <input class="form-control" formControlName="lowerRangeSearch" (dateChange)="setGenericRangeFromSearch($event)" id="animate1"
+                          placeholder="Lower Range" matInput [matDatepicker]="dp4" style="padding-left: 40px;">
+                        <mat-datepicker-toggle matSuffix [for]="dp4" style="position:absolute;bottom:15px;left:5px;"></mat-datepicker-toggle>
+                        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      <mat-form-field style=" position:relative; width:100%">
+                        <input class="form-control" formControlName="higherRangeSearch" (dateChange)="setGenericRangeToSearch($event)" id="animate2"
+                          placeholder="Higher Range" matInput [matDatepicker]="dp5" style="padding-left: 40px;">
+                        <mat-datepicker-toggle matSuffix [for]="dp5" style="position:absolute;bottom:15px;left:5px;"></mat-datepicker-toggle>
+                        <mat-datepicker #dp5 disabled="false"></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!--/END TETIARY SEARCH FILTERS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--/End Search and All It's Filters -->
+
+  <!-- Created By Unique Input -->
+  <div class="row" *ngIf="_createBy">
+    <div class="col-xl-6 col-md-12">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <fieldset class="form-group position-relative">
+                <input type="text" class="form-control round" id="iconLeft10" placeholder="Search Out Creator's Name">
+                <div class="form-control-position">
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Created By Unique Input -->
+
+  <!-- All Other Primary Inputs Grouped in a Form (For the purpose of assigning initial values)-->
+  <form class="form" [formGroup]="incidentControlForm">
+    <div class="row" *ngIf="_incidentType">
+      <div class="col-xl-6 col-md-12">
+        <div class="card overflow-hidden">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <span class="font-medium-2" style="margin-bottom:0px !important">Select Incident Type</span>
+              <div class="media align-items-stretch" *ngIf="_incidentTypes">
+
+                <select id="incidentType" (change)="setGenericReportParam($event)" formControlName="incidentType" name="incidentType" class="form-control"
+                  style="margin-top:5px !important">
+                  <option value="" selected="" disabled="">Choose Type</option>
+                  <option value="{{incidentType.id}}" *ngFor="let incidentType of _incidentTypes.reponse.responseData">{{incidentType.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Casuality Level -->
+    <div class="row" *ngIf="_casualityLevel">
+      <div class="col-xl-6 col-md-12">
+        <div class="card overflow-hidden">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <span class="font-medium-2" style="margin-bottom:0px !important">Select Casuality Level</span>
+              <div class="media align-items-stretch" *ngIf="_casualtyLevels">
+
+                <select id="casualtyLevel" (change)="setGenericReportParam($event)" formControlName="casualtyLevel" name="casualtyLevel"
+                  class="form-control" style="margin-top:5px !important">
+                  <option value="" selected="" disabled="">Choose Level</option>
+                  <option value="{{casualtyLevel.id}}" *ngFor="let casualtyLevel of _casualtyLevels.reponse.responseData">{{casualtyLevel.level}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Casuality Level -->
+    <!-- Patrol Team Supervisor Level -->
+    <div class="row" *ngIf="_hasPatrolTeam">
+      <div class="col-xl-6 col-md-12">
+        <div class="card overflow-hidden">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <span class="font-medium-2" style="margin-bottom:0px !important">Patrol Team Supervisor</span>
+              <div class="media align-items-stretch" *ngIf="_patrolMembers">
+
+                <select id="patrolTeamSupervisor" (change)="setGenericReportParam($event)" formControlName="patrolTeamSupervisor" name="patrolTeamSupervisor"
+                  class="form-control" style="margin-top:5px !important">
+                  <option value="" selected="" disabled="">Choose Supervisor</option>
+                  <option value="{{patrolMember.id}}" *ngFor="let patrolMember of _patrolMembers.reponse.responseData">{{patrolMember.firstName}} {{patrolMember.surname}} --- {{patrolMember.position}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Casuality Level -->
+    <!-- Day of Incident -->
+    <div class="row" *ngIf="_dayOfIncident">
+      <div class="col-xl-6 col-md-12">
+        <div class="card overflow-hidden">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <span class="font-medium-2" style="margin-bottom:0px !important">Select Date</span>
+              <div class="media align-items-stretch">
+                <!-- <input type="text" class="form-control" formControlName="dayOfIncident" id="animate" placeholder="Select Date" readonly="readonly"> -->
+                <mat-form-field style=" position:relative; width:100%">
+                  <input class="form-control" (dateChange)="setGenericDateOfIncident($event)" formControlName="dayOfIncident" id="animate"
+                    placeholder="Select Date" matInput [matDatepicker]="dp3" style="padding-left: 40px;">
+                  <mat-datepicker-toggle matSuffix [for]="dp3" style="position:absolute;bottom:15px;left:5px;"></mat-datepicker-toggle>
+                  <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Day of Incident -->
+    <!-- Day of Incident -->
+    <div class="row" *ngIf="_dateRange">
+      <div class="col-xl-12 col-md-12">
+        <div class="card overflow-hidden">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <span class="font-medium-2" style="margin-bottom:0px !important">Select Range</span>
+              <div class="media align-items-stretch">
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field style=" position:relative; width:100%">
+                    <input class="form-control" (dateChange)="setGenericRangeFrom($event)" formControlName="lowerRange" id="animate1" placeholder="Lower Range"
+                      matInput [matDatepicker]="dp4" style="padding-left: 40px;">
+                    <mat-datepicker-toggle matSuffix [for]="dp4" style="position:absolute;bottom:15px;left:5px;"></mat-datepicker-toggle>
+                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field style=" position:relative; width:100%">
+                    <input class="form-control" (dateChange)="setGenericRangeTo($event)" formControlName="higherRange" id="animate2" placeholder="Higher Range"
+                      matInput [matDatepicker]="dp5" style="padding-left: 40px;">
+                    <mat-datepicker-toggle matSuffix [for]="dp5" style="position:absolute;bottom:15px;left:5px;"></mat-datepicker-toggle>
+                    <mat-datepicker #dp5 disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Day of Incident -->
+  </form>
+  <!--/End All Other Inputs Grouped in a Form -->
+  <!--/END SECONDARY FILTERS -->
+
+
+  <!-- DATA TABLE  -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Incident Report: <span style="font-style:italic">({{SearchBy}})</span></p><a class="heading-elements-toggle"><i  class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <!-- Adjust Table Rows Control -->
+            <div class="adjustTableRows">
+              <button class="btn dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" style="background-color:#fff; border-color:#EEEDED; margin-bottom: 10px">{{_items}} / Page</button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a class="dropdown-item" (click)="adjustTableRows('2')">2 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('10')">10 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('20')">20 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('40')">40 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('60')">60 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('100')">100 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('200')">200 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('500')">500 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('1000')">1000 / Page</a>
+              </div>
+            </div>
+            <!-- Adjust Table Rows Control -->
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="bg-teal bg-lighten-4">
+                  <tr>
+                    <th>#</th>
+                    <th>Staff ID</th>
+                    <th>Caller Name</th>
+                    <th>Status</th>
+                    <th>Incident Type</th>
+                    <th>Patrol Supervisor</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <div *ngIf="!_incidents && !_stopLoading" class="loading">
+                      <img src="assets/icons/loading.gif" alt="">
+                    </div>
+                    <div *ngIf="!_incidents && _stopLoading && !notFound" class="internet-issue">
+                      <h3>Please Check Your Internet Connection</h3>
+                      <span class="no-internet-img"><img src="assets/icons/internet.png" alt=""></span>
+                      <span class="try-btn" (click)="reload()">Then click to Try Again</span>
+                    </div>
+                    <div *ngIf="_stopLoading && notFound">
+                      <h3 style="font-style:italic">No Such Record Inserted into Database Yet</h3>
+                    </div>
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <!-- <div *ngIf="!_incidents" class="loading">
+                        <div class="blockUI" style="display:none"></div>
+                        <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                        <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                          <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                        </div>
+                      </div> -->
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="_incidents">
+                  <tr *ngFor="let incident of _incidents.reponse.responseData | paginate: { id: 'incident', itemsPerPage: _items, currentPage: p, totalItems: total }; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{incident.staffId}}</td>
+                    <td>{{incident.callerName}}</td>
+                    <td>{{incident.status}}</td>
+                    <td>{{incident.incidentType}}</td>
+                    <td>{{incident.patrolSupervisor}}</td>
+                    <td style="text-align: center">
+                      <div class="btn-group mx-2" incident="group" aria-label="Second Group">
+                        <button type="button" class="btn btn-icon btn-outline-success" routerLink="/admin/incident/details/{{incident.id}}"><i class="la la-eye" ></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-warning" routerLink="/admin/incident/edit/{{incident.id}}"><i class="la la-pencil"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-danger" routerLink="/admin/incident/status/{{incident.id}}"><i class="la la-comments-o"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls class="my-pagination" (pageChange)="nextPage($event)" id="incident"></pagination-controls>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12" style="text-align:center">
+          <button *ngIf="_incidents" type="button" class="btn mr-1 mb-1 btn-outline-danger btn-lg" routerLink="/admin/reports/incident/visualize"><i class="la la-bar-chart-o"></i> Visualize Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

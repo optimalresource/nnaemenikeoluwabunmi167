@@ -1,0 +1,364 @@
+<div style="">
+  <p class="card-title font-large-1">Dashboard</p>
+
+  <div class="row">
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card pull-up">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h3 class="danger" *ngIf="_reportIncidentTotal; else reportIncAlt">{{_reportIncidentTotal}}</h3>
+                <ng-template #reportIncAlt>
+                  <h3 class="danger">0</h3>
+                </ng-template>
+                <span>All Incidents</span>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-fire danger font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card pull-up">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h3 class="success" *ngIf="_patrolTeamTotal; else patrolTeamAlt">{{_patrolTeamTotal}}</h3>
+                <ng-template #patrolTeamAlt>
+                  <h3 class="success">0</h3>
+                </ng-template>
+                <span>Patrol Teams</span>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-rocket success font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card pull-up">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h3 class="warning" *ngIf="_casualtyLvlTotal; else casualtyLvlAlt">{{_casualtyLvlTotal}}</h3>
+                <ng-template #casualtyLvlAlt>
+                  <h3 class="warning">0</h3>
+                </ng-template>
+                <span>Casualty Levels</span>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-layers warning font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card pull-up">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h3 class="info" *ngIf="_mgsTotal; else mgsAlt">{{_mgsTotal}}</h3>
+                <ng-template #mgsAlt>
+                  <h3 class="info">0</h3>
+                </ng-template>
+                <span>Message Drafts</span>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-speech info font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Box -->
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+      <div class="card overflow-hidden" style="background:transparent">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <fieldset class="form-group position-relative">
+                <input type="text" class="form-control round" id="iconLeft10" placeholder="Search bar">
+                <div class="form-control-position">
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Search Box -->
+
+  <div class="row">
+
+    <div id="recent-sales" class="col-12 col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Affected Staff: This Year</h4>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a class="btn btn-sm btn-warning box-shadow-2 round btn-min-width pull-right" href="" target="_blank">View
+                  all</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content mt-1">
+          <div class="table-responsive">
+            <table id="recent-orders" class="table table-hover table-xl mb-0">
+              <thead>
+                <tr>
+                  <th class="border-top-0">#</th>
+                  <th class="border-top-0">Staff</th>
+                  <th class="border-top-0">Incident Type</th>
+                  <th class="border-top-0">Severity</th>
+                  <th class="border-top-0">Staff Details</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="staffTableData; else staffTableAlt">
+                <tr *ngFor="let std of staffTableData | slice:0:5; let i = index">
+                  <td class="text-truncate">{{i + 1}}</td>
+                  <td class="text-truncate">{{std.name}}</td>
+                  <td class="text-truncate p-1">
+                    <ul class="list-unstyled users-list m-0">
+                      <li *ngFor="let incident of std.series | slice:0:2; let j = index" data-toggle="tooltip"
+                        data-popup="tooltip-custom" [attr.data-title]="incident.name" [attr.data-original-title]="incident.name"
+                        class="avatar avatar-sm pull-up" (click)="popupIncidentName(incident.name, incident.value)">
+                        <img class="media-object rounded-circle" src="assets/icons/avatar-large.jpg" alt="Avatar">
+                      </li>
+                      <li class="avatar avatar-sm" *ngIf="std.series.length > 2">
+                        <span class="badge badge-info">+{{std.series.length-2}} more</span>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger round" *ngIf="std.series.length > 2; else lowIndicator">High</button>
+                    <ng-template #lowIndicator>
+                      <button type="button" class="btn btn-sm btn-outline-success round">Low</button>
+                    </ng-template>
+                  </td>
+                  <td class="text-truncate visualizeBtn" (click)="setSingleData(std.name)">Visualize</td>
+                </tr>
+              </tbody>
+
+              <ng-template #staffTableAlt>
+                <tbody>
+                  <tr id="tr">
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate p-1">N/A</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr id="tr">
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate p-1">N/A</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr id="tr">
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate p-1">N/A</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr id="tr">
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate p-1">N/A</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr id="tr">
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate"></td>
+                    <td class="text-truncate p-1">N/A</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card">
+        <div class="card-content">
+          <div class="earning-chart position-relative">
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+              <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+              </div>
+              <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+              </div>
+            </div>
+            <div class="chart-title position-absolute mt-2 ml-2">
+              <h1 class="display-5" *ngIf="_vStaffID; else vStaffID">{{_vStaffID}}</h1>
+              <ng-template #vStaffID>
+                <h1 class="display-5">Staff ID</h1>
+              </ng-template>
+              <span class="text-muted">Incidents Visualized</span>
+            </div>
+            <!-- <div> This is a visual representation of a pie chart</div> -->
+            <div id="earning-chart">
+              <ngx-charts-pie-chart style="width:100%; height:auto" [view]="view" [scheme]="colorScheme" [results]="single"
+                [doughnut]="doughnut" [gradient]="gradient" (window:resize)="onResize($event)">
+              </ngx-charts-pie-chart>
+            </div>
+
+            <div class="chart-stats position-absolute position-bottom-0 position-right-0 mb-2 mr-3">
+              <a class="btn round btn-warning mr-1 btn-glow">Get Details <i class="ft-bar-chart"></i></a>
+              <span class="text-muted">or view <a class="danger darken-2">Staff Profile.</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-3 wingers">
+      <div class="card pull-up">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h6 class="text-muted">Still Open</h6>
+                <h3 *ngIf="_openIncidentTotal; else openIT">{{_openIncidentTotal}}</h3>
+                <ng-template #openIT>
+                  <h3>0</h3>
+                </ng-template>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-book-open info font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title text-center">Incidents This Year</h4>
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body pt-0">
+            <div class="row">
+              <div class="col-md-6 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                <h6 class="danger text-bold-600">Reported</h6>
+                <h4 class="font-large-2 text-bold-400" *ngIf="_reportIncidentTotal; else reportIT">{{_reportIncidentTotal}}</h4>
+                <ng-template #reportIT>
+                  <h4 class="font-large-2 text-bold-400">0</h4>
+                </ng-template>
+                <p class="blue-grey lighten-2 mb-0">Cases</p>
+              </div>
+              <div class="col-md-6 col-12 text-center">
+                <h6 class="success text-bold-600">Resolved</h6>
+                <h4 class="font-large-2 text-bold-400" *ngIf="_resolvedIncidentTotal; else resolvedIT">{{_resolvedIncidentTotal}}</h4>
+                <ng-template #resolvedIT>
+                  <h4 class="font-large-2 text-bold-400">0</h4>
+                </ng-template>
+                <p class="blue-grey lighten-2 mb-0">Cases</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-3 wingers">
+      <div class="card pull-up">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h6 class="text-muted">Incident Types</h6>
+                <h3 *ngIf="_incidentTypesTotal; else ITT">{{_incidentTypesTotal}}</h3>
+                <ng-template #ITT>
+                  <h3>0</h3>
+                </ng-template>
+              </div>
+              <div class="align-self-center">
+                <i class="icon-refresh warning font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Inbox -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <p class="card-title font-medium-4">Message Drafts</p><a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+              <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+              <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="bg-teal bg-lighten-4">
+                  <tr>
+                    <th>#</th>
+                    <th>Message ID</th>
+                    <th>Sender's Name</th>
+                    <th>Escalation Level</th>
+                    <!-- <th>Sender's Name</th> -->
+                    <!-- <th>Message Content</th> -->
+                    <th>Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+
+                  </tr>
+                </tbody>
+              </table>
+              <p class="card-title font-medium-3" style="width:100%; text-align:center; padding-top:20px;">No Message
+                yet!</p><a class="heading-elements-toggle"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

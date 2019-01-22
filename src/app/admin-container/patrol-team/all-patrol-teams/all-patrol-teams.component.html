@@ -1,0 +1,112 @@
+<div style="padding-bottom: 100px">
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <fieldset class="form-group position-relative">
+                <input type="text" class="form-control round" id="iconLeft10" placeholder="Search bar">
+                <div class="form-control-position">
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">All Patrol Teams</p><a class="heading-elements-toggle"><i  class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="bg-teal bg-lighten-4">
+                  <tr>
+                    <th>#</th>
+                    <th>Patrol Team</th>
+                    <th>Team Lead</th>
+                    <th>Police One</th>
+                    <th>Police Two</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <div *ngIf="!_patrolTeams && !_stopLoading" class="loading">
+                      <img src="assets/icons/loading.gif" alt="">
+                    </div>
+                    <div *ngIf="_stopLoading" class="internet-issue">
+                      <h3>Please Check Your Internet Connection</h3>
+                      <span class="no-internet-img"><img src="assets/icons/internet.png" alt=""></span>
+                      <span class="try-btn" (click)="reload()">Then click to Try Again</span>
+                    </div>
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <!-- <div *ngIf="!_patrolTeams" class="loading">
+                        <div class="blockUI" style="display:none"></div>
+                        <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                        <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                          <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                        </div>
+                      </div> -->
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="_patrolTeams">
+                  <tr *ngFor="let _patrolTeam of _patrolTeams.reponse.responseData | paginate: { id: 'patrolTeam', itemsPerPage: _items, currentPage: p, totalItems: total }; let i=index">
+                    <td>{{_patrolTeam.id}}</td>
+                    <td>{{_patrolTeam.teamName}}</td>
+                    <td>{{_patrolTeam.teamHead}}</td>
+                    <td>{{_patrolTeam.policeOne}}</td>
+                    <td>{{_patrolTeam.policeTwo}}</td>
+                    <td style="text-align: center">
+                      <div class="btn-group mx-2" role="group" aria-label="Second Group">
+                        <button type="button" class="btn btn-icon btn-outline-success" routerLink="/admin/patrol-team/details/{{_patrolTeam.id}}"><i class="la la-eye" ></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-warning" routerLink="/admin/patrol-team/edit/{{_patrolTeam.id}}"><i class="la la-pencil"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-danger" (click)="delete(_patrolTeam.id)"><i class="la la-close"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls class="my-pagination" (pageChange)="nextPage($event)" id="patrolTeam"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

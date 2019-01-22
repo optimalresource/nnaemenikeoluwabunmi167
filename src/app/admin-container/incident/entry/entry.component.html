@@ -1,0 +1,96 @@
+<div style="padding-bottom: 300px">
+  <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+    <div class="card-header">
+      <p class="card-title font-large-1">Find Affected Staff</p> <span style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">( ...and Proceed to Report Incident )</span>
+      <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+      <div class="heading-elements">
+        <ul class="list-inline mb-0">
+          <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+          <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+      <div class="card-body">
+        <div class="search-filter">
+          <div class="font-medium-2">Search By:</div>
+          <!-- BUTTON -->
+          <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button class="btn btn-warning round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{SearchBy}}</button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <a class="dropdown-item" (click)="filterBy('Staff Name')">Staff Name</a>
+              <a class="dropdown-item" (click)="filterBy('Staff ID')">Staff ID</a>
+              <a class="dropdown-item" (click)="filterBy('No Filter')">No Filter</a></div>
+          </div>
+        </div>
+
+        <!-- INPUT WITH CARD -->
+        <fieldset class="form-group position-relative has-icon-left" style="padding-bottom: 20px">
+          <input #search type="text" (keyup)="searchTerm$.next($event.target.value)" class="form-control round" id="iconLeft11" placeholder="Search"
+            data-toggle="tooltip" data-placement="right" [attr.data-title]="'By ' + SearchBy" [attr.data-original-title]="'By ' + SearchBy"
+            title="">
+          <div class="form-control-position">
+            <i class="icon-magnifier warning font-small-4"></i>
+          </div>
+        </fieldset>
+
+        <!-- LIST -->
+        <div class="table-responsive">
+          <table class="table  table-lg table-striped text-center">
+            <thead *ngIf="results">
+              <tr>
+                <th data-sort="image">Photo</th>
+                <th class="sort text-center" data-sort="name">Full Name</th>
+                <th class="sort text-center asc" data-sort="sid">Staff ID</th>
+                <th class="sort text-center" data-sort="phone">Phone</th>
+                <th class="sort text-center" data-sort="designation">Designation</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <caption>
+              <div *ngIf="!_stopLoading && !_noSuchStaff" class="loading">
+                <img src="assets/icons/loading.gif" alt="">
+              </div>
+              <!-- <div *ngIf="!results && _stopLoading" class="internet-issue">
+                    <h3>Please Check Your Internet Connection</h3>
+                    <span class="no-internet-img"><img src="assets/icons/internet.png" alt=""></span>
+                    <span class="try-btn" (click)="reload()">Then click to Try Again</span>
+                  </div> -->
+              <div class="table-responsive" *ngIf="_noSuchStaff" style="padding-top:20px">
+                <div class="add text-center">
+                  <p class="font-medium-2"><span class="text-danger">This Staff do not exist! </span> Click below to add this Staff Member.</p>
+                  <button id="add-btn" class="btn btn-success" routerLink="/admin/staff/add">Add this Staff</button>
+                </div>
+              </div>
+            </caption>
+            <!-- IMPORTANT, class="list" have to be at tbody -->
+            <tbody class="list" *ngIf="results">
+              <tr *ngFor="let result of results.reponse.responseData | slice:0:9 | paginate: { id: 'search', itemsPerPage: _items, currentPage: p, totalItems: total }; let i=index">
+                <td class="image"><span class="card-profile-image img"><img class="image" src={{result.staffImage}} onerror="this.src='assets/icons/avatar-large.jpg'" alt="avatar"></span></td>
+                <td class="name" style="vertical-align: center !important">{{result.staffFirstName}}&nbsp;{{result.staffOtherName}}&nbsp;{{result.staffSurname}}</td>
+                <td class="sid">{{result.staffId}}</td>
+                <td class="phone">{{result.staffNumber}}</td>
+                <td class="designation">{{result.staffDesignation}}</td>
+                <td class="action"><button class="btn btn-outline-warning remove-item-btn" routerLink="form/{{result.id}}">Continue to Incident Form</button></td>
+                <!-- <td class="action"><button class="btn btn-outline-warning remove-item-btn" routerLink="form/{{result.id}}">Continue to Incident Form</button></td> -->
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls *ngIf="results" class="my-pagination" (pageChange)="nextPage($event); searchTerm$.next(search.value)"
+            id="search"></pagination-controls>
+        </div>
+
+        <!-- ADD NEW -->
+        <div class="table-responsive" *ngIf="!results && !_noSuchStaff">
+          <div class="add text-center">
+            <p class="font-medium-2">Coundn't Find the Staff you were looking for? Click below to add this Staff Member.</p>
+            <button id="add-btn" class="btn btn-success" routerLink="/admin/staff/add">Add this Staff</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<toaster-container [toasterconfig]="config1"></toaster-container>

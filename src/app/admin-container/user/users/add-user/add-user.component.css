@@ -1,0 +1,14 @@
+.errorRed {
+    color:red; 
+}
+
+.successGreen {
+    color:green
+}
+
+@media (max-width: 767px) {
+    .successGreen, .errorRed {
+        padding:0; 
+        padding-left:1.2rem
+    }
+}

@@ -1,0 +1,359 @@
+<div style="padding-bottom: 0px">
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+    </div>
+    <div class="col-xl-6 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" (click)="goBack()" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Update Task</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!taskFormData && !_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody>
+                  <tr>
+                    <td class="mtn-yellow-bg">Staff ID</td>
+                    <td *ngIf="taskFormData">{{taskFormData.staffConcerned}}</td>
+                    <td class="mtn-yellow-bg">Patrol Supervisor</td>
+                    <td *ngIf="taskFormData">{{taskFormData.supervisorName}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">State</td>
+                    <td *ngIf="taskFormData">{{taskFormData.locState}}</td>
+                    <td class="mtn-yellow-bg">L.G.A</td>
+                    <td *ngIf="taskFormData">{{taskFormData.lga}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Address</td>
+                    <td *ngIf="taskFormData">{{taskFormData.address}}</td>
+                    <td class="mtn-yellow-bg">Task Description</td>
+                    <td *ngIf="taskFormData">{{taskFormData.taskDescription}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Created At</td>
+                    <td *ngIf="taskFormData">{{taskFormData.createdAt}}</td>
+                    <td class="mtn-yellow-bg">Created By</td>
+                    <td *ngIf="taskFormData">{{taskFormData.createdBy}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Update Count</td>
+                    <td *ngIf="taskFormData">{{taskFormData.updateCount}}</td>
+                    <td class="mtn-yellow-bg">ID</td>
+                    <td *ngIf="taskFormData">{{taskFormData.id}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Begin Time</td>
+                    <td *ngIf="taskFormData">{{taskFormData.expectedBeginTime}}</td>
+                    <td class="mtn-yellow-bg">End Time</td>
+                    <td *ngIf="taskFormData">{{taskFormData.expectedEndTime}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Task Begun</td>
+                    <td *ngIf="taskFormData">{{taskFormData.taskBegun}}</td>
+                    <td class="mtn-yellow-bg">Task Cancelled</td>
+                    <td *ngIf="taskFormData">{{taskFormData.taskCanceled}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Task Completed</td>
+                    <td *ngIf="taskFormData">{{taskFormData.taskCompleted}}</td>
+                    <td class="mtn-yellow-bg">Reassigned</td>
+                    <td *ngIf="taskFormData">{{taskFormData.reAssigned}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content collpase " [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <form class="form form-horizontal striped-rows form-bordered" [formGroup]="taskForm" (submit)="submit()">
+              <div class="form-body">
+                <h4 class="form-section"></h4>
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="shift">Shift (Patrol Team) *</label>
+                  <div class="col-md-6">
+                    <select id="shift" formControlName="shift" name="shift" class="form-control">
+                      <option value="" selected="" disabled="">Select a Shift</option>
+                      <option value="{{_shift.id}}" *ngFor="let _shift of _shifts">{{_shift.teamName}}</option>
+                    </select>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['shift']?.errors?.required && (taskForm.controls['shift']?.touched || taskForm.controls['shift']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['shift']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="staffConcerned">Staff Affected *</label>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <input type="text" placeholder="Find Staff" (keyup)="searchTerm$.next($event.target.value)"
+                        aria-label="Number" matInput formControlName="staffConcerned" [matAutocomplete]="auto" class="form-control">
+                      <mat-autocomplete #auto="matAutocomplete" class="custom-scroll">
+                        <mat-option *ngIf="staffSearchLoading" class="is-loading" style="display:grid; justify-content: center; align-items:center">
+                          <mat-spinner diameter="50"></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!staffSearchLoading">
+                          <mat-option *ngFor="let option of affectedStaff" [value]="option.staffId">
+                            <span>{{ option.staffId }}</span>
+                          </mat-option>
+                        </ng-container>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['staffConcerned']?.errors?.required && (taskForm.controls['staffConcerned']?.touched || taskForm.controls['staffConcerned']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['staffConcerned']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(!taskForm.controls['staffConcerned']?.errors?.minlength && !taskForm.controls['staffConcerned']?.errors?.required && (taskForm.controls['staffConcerned']?.touched || taskForm.controls['staffConcerned']?.dirty) && notFound)"
+                    class="errorRed invalid animated wobble">
+                    Not Staff With This ID.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="taskDescription">Task Description *</label>
+                  <div class="col-md-6">
+                    <textarea formControlName="address" id="taskDescription" rows="5" class="form-control" name="taskDescription"
+                      placeholder="Enter Task Description"></textarea>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['taskDescription']?.errors?.required && (taskForm.controls['taskDescription']?.touched || taskForm.controls['taskDescription']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['taskDescription']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="state">State *</label>
+                  <div class="col-md-6">
+                    <select (change)="checkStateSelected($event.target.value)" formControlName="locState" id="state"
+                      name="state" class="form-control">
+                      <option value="" selected="" disabled="">Select a State</option>
+                      <option *ngFor="let state of states" value="{{state.id}}">
+                        {{state.state}}
+                      </option>
+                    </select>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['locState']?.errors?.required && (taskForm.controls['locState']?.touched || taskForm.controls['locState']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['locState']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="lga">Local Government *</label>
+                  <div class="col-md-6">
+                    <select formControlName="lga" id="lga" name="lga" class="form-control">
+                      <option value="" selected="" disabled="">Select a State first</option>
+                      <option *ngFor="let lga of LGAs" value="{{lga}}">
+                        {{lga}}
+                      </option>
+                    </select>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['lga']?.errors?.required && (taskForm.controls['lga']?.touched || taskForm.controls['lga']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['lga']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row last">
+                  <label class="col-md-3 label-control" for="address">Address/Description *</label>
+                  <div class="col-md-6">
+                    <textarea formControlName="address" id="address" rows="5" class="form-control" name="address"
+                      placeholder="Enter Address/Description"></textarea>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['address']?.errors?.required && (taskForm.controls['address']?.touched || taskForm.controls['address']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['address']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="expectedBeginTime">Expected Start Date *</label>
+                  <div class="col-md-6">
+                    <mat-form-field style=" position:relative; width:100%">
+                      <input class="form-control" formControlName="expectedBeginTime" (dateChange)="setexpectedBeginTime($event)"
+                        id="animate" placeholder="Select from Calendar" date="true" matInput [matDatepicker]="dp3"
+                        style="padding-left: 40px;">
+                      <mat-datepicker-toggle matSuffix [for]="dp3" style="position:absolute;bottom:0px;left:5px;"></mat-datepicker-toggle>
+                      <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['expectedBeginTime']?.errors?.required && (taskForm.controls['expectedBeginTime']?.touched || taskForm.controls['expectedBeginTime']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['expectedBeginTime']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="startTime">Expected Start Time *</label>
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group mb-3">
+                      <input type="text" formControlName="startTime" id="startTime" class="form-control" placeholder="Expected Start Time"
+                        name="callerNumber">
+                    </div>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['startTime']?.errors?.required && (taskForm.controls['startTime']?.touched || taskForm.controls['startTime']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['startTime']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="expectedEndTime">Expected End Date *</label>
+                  <div class="col-md-6">
+                    <mat-form-field style=" position:relative; width:100%">
+                      <input class="form-control" formControlName="expectedEndTime" (dateChange)="setexpectedEndTime($event)"
+                        id="animate" placeholder="Select from Calendar" matInput [matDatepicker]="dp4" style="padding-left: 40px;">
+                      <mat-datepicker-toggle matSuffix [for]="dp4" style="position:absolute;bottom:0px;left:5px;"></mat-datepicker-toggle>
+                      <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['expectedEndTime']?.errors?.required && (taskForm.controls['expectedEndTime']?.touched || taskForm.controls['expectedEndTime']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['expectedEndTime']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="endTime">Expected End Time *</label>
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group mb-3">
+                      <input type="text" formControlName="endTime" id="endTime" class="form-control" placeholder="Expected End Time"
+                        name="callerNumber">
+                    </div>
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(taskForm.controls['endTime']?.errors?.required && (taskForm.controls['endTime']?.touched || taskForm.controls['endTime']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(taskForm.controls['endTime']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+
+              </div>
+              <!-- form buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                  <i class="ft-x"></i> Close
+                </button>
+                <button type="submit" [disabled]="taskForm.invalid" class="btn btn-primary">
+                  <i class="la la-check-square-o"></i> Update Task
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

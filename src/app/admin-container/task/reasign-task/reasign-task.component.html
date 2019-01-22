@@ -1,0 +1,162 @@
+<div style="padding-bottom: 300px">
+  <!-- Title and Back Button -->
+  <div class="row">
+    <div class="col-xl-4 col-md-5">
+      <div class="card" style="margin-bottom:0px !important">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <p class="card-title font-large-1" style="margin-bottom:0px !important">Reassign Task</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 col-md-7">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin/task/all" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Title and Back Button -->
+
+  <div class="row">
+    <div class="col-xl-6 col-md-6">
+      <div class="card" style="padding: 15px 20px 10px">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter" style="width:100%">
+
+                <form class="form form-horizontal" [formGroup]="taskForm" (submit)="submit()">
+                  <div class="form-body">
+                    <div class="form-group row">
+
+                      <select id="supervisor" formControlName="supervisor" name="supervisor" class="form-control">
+                          <option value="" selected="" disabled="">Reassign to Another Supervisor</option>
+                          <option value="{{_supervisor.id}}" *ngFor="let _supervisor of _supervisors">{{_supervisor.teamName}}</option>
+                        </select>
+
+                    </div>
+                  </div>
+                </form>
+
+                <button type="submit" [disabled]="taskForm.invalid" class="btn btn-primary">
+                  <i class="la la-check-square-o"></i> Reassign
+              </button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-xl-8 col-md-7"> -->
+    <!-- Space Holder -->
+    <!-- </div> -->
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-xl-5 col-md-5">
+      <div class="card pull-up" style="margin-bottom:0px !important">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <p class="card-title font-large-1" style="margin-bottom:0px !important">Task Details</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Task Details</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!taskFormData && !_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody>
+                  <tr>
+                    <td class="mtn-yellow-bg">Branch Name</td>
+                    <td *ngIf="taskFormData">{{taskFormData.branchName}}</td>
+                    <td class="mtn-yellow-bg">1st Police Name</td>
+                    <td *ngIf="taskFormData">{{taskFormData.policeOneName}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">2nd Police Name</td>
+                    <td *ngIf="taskFormData">{{taskFormData.policeTwoName}}</td>
+                    <td class="mtn-yellow-bg">Supervisor Name</td>
+                    <td *ngIf="taskFormData">{{taskFormData.supervisorName}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Team Name</td>
+                    <td *ngIf="taskFormData">{{taskFormData.teamName}}</td>
+                    <td class="mtn-yellow-bg">Vehicle Name</td>
+                    <td *ngIf="taskFormData">{{taskFormData.vehicleName}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Created At</td>
+                    <td *ngIf="taskFormData">{{taskFormData.createdAt}}</td>
+                    <td class="mtn-yellow-bg">Created By</td>
+                    <td *ngIf="taskFormData">{{taskFormData.createdBy}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Update Count</td>
+                    <td *ngIf="taskFormData">{{taskFormData.updateCount}}</td>
+                    <td class="mtn-yellow-bg">ID</td>
+                    <td *ngIf="taskFormData">{{taskFormData.id}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

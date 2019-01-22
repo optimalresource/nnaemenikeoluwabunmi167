@@ -1,0 +1,115 @@
+<div style="padding-bottom: 200px">
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+    </div>
+    <div class="col-xl-6 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin/user-role/all" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">User Role Detail</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!userData && !_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody>
+                  <tr>
+                    <td class="mtn-yellow-bg">Role ID</td>
+                    <td *ngIf="userData">{{userData.id}}</td>
+                    <td class="mtn-yellow-bg">Role Name</td>
+                    <td *ngIf="userData">{{userData.name}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Created At</td>
+                    <td *ngIf="userData">{{userData.created_at}}</td>
+                    <td class="mtn-yellow-bg">Created By</td>
+                    <td *ngIf="userData">{{userData.created_by}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content collpase show">
+          <div class="card-body">
+            <form class="form form-horizontal striped-rows" [formGroup]="userRoleForm" (submit)="submit()">
+              <div class="form-body">
+                <h4 class="form-section"></h4>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Update User Role</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="userRoleName" id="projectinput1" class="form-control" placeholder="User Role Name" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(userRoleForm.controls['userRoleName'].errors?.required && (userRoleForm.controls['userRoleName'].touched || userRoleForm.controls['userRoleName'].dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(userRoleForm.controls['userRoleName'].errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(userRoleForm.controls['userRoleName'].valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+              </div>
+
+              <!-- form buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                <i class="ft-x"></i> Close
+                </button>
+                <button type="submit" [disabled]="userRoleForm.invalid" class="btn btn-primary">
+                    <i class="la la-check-square-o"></i> Update Role
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

@@ -1,0 +1,244 @@
+<div style="padding-bottom: 300px">
+  <!-- Title and Back Button -->
+  <div class="row">
+    <div class="col-xl-5 col-md-5">
+      <div class="card" style="margin-bottom:0px !important">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <p class="card-title font-large-1" style="margin-bottom:0px !important">Incident Report Visualizer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-7 col-md-7">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin/reports/incident" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Title and Back Button -->
+
+  <!-- Inhereted Filters -->
+  <div class="row" style="margin-top:15px !important;">
+    <div class="col-xl-8 col-md-7">
+      <div class="font-medium-3" style="font-weight:700">Filters Applied</div>
+      <div class="card">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <div class="font-medium-2" style="font-weight:600">Filter Name:</div>
+                <div class="font-medium-2" *ngIf="fetchedFilterNames">{{fetchedFilterNames}}</div>
+              </div>
+            </div>
+            <hr style="padding: 5px 2px; margin-bottom: 0rem !important;">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <div class="font-medium-2" style="font-weight:600">Extra Filter:</div>
+                <div *ngIf="fetchedFilterValues">
+                  <div class="font-medium-2" *ngIf="fetchedFilterValues.date_of_incident">Particular Date: {{fetchedFilterValues.date_of_incident}}
+                    <hr style="margin:0">
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;justify-content:center; grid-gap: 10px">
+                    <div class="font-medium-2" *ngIf="fetchedFilterValues.rangeFrom">From: {{fetchedFilterValues.rangeFrom}} </div>
+                    <div class="font-medium-2" *ngIf="fetchedFilterValues.rangeTo">To: {{fetchedFilterValues.rangeTo}}</div>
+                  </div>
+                  <hr *ngIf="fetchedFilterValues.rangeFrom || fetchedFilterValues.rangeTo" style="margin:0">
+                  <!-- <div class="font-medium-2" *ngIf="fetchedFilterValues.reportBy">{{fetchedFilterValues.reportBy}}
+                    <hr style="margin:0">
+                  </div> -->
+                  <div class="font-medium-2" *ngIf="fetchedFilterValues.reportParam">{{fetchedFilterValues.reportParam}}
+                    <hr style="margin:0">
+                  </div>
+                  <div class="font-medium-2" *ngIf="fetchedFilterValues.state">State: {{fetchedFilterValues.state}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-md-5">
+      <div class="">
+        <div class="font-medium-3" style="font-weight:700; width:100%; text-align:right; padding-right:3rem;">Chart Type</div>
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="search-filter">
+                <!-- <div class="font-medium-2">Chart Type:</div> -->
+                <!-- BUTTON -->
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button class="btn btn-warning round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{chartType}}</button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" (click)="morphChartType('Vertical Bar Chart')">Vertical Bar Chart</a>
+                    <a class="dropdown-item" (click)="morphChartType('Horizontal Bar Chart')">Horizontal Bar Chart</a>
+                    <a class="dropdown-item" (click)="morphChartType('Grouped Vertical Bar Chart')">Grouped Vertical Bar Chart</a>
+                    <a class="dropdown-item" (click)="morphChartType('Grouped Horizontal Bar Chart')">Grouped Horizontal Bar Chart</a>
+                    <a class="dropdown-item" (click)="morphChartType('Stacked Vertical Bar Chart')">Stacked Vertical Bar Chart</a>
+                    <a class="dropdown-item" (click)="morphChartType('Pie Chart')">Pie Chart (Doughnut)</a>
+                    <a class="dropdown-item" (click)="morphChartType('Advanced Pie Chart')">Advanced Pie Chart (Doughnut)</a>
+                    <a class="dropdown-item" (click)="morphChartType('Line Chart')">Line Chart</a>
+                    <a class="dropdown-item" (click)="morphChartType('Area Chart')">Area Chart</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Inhereted Filters -->
+
+  <!-- Main Chart Area -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-medium-4">Chart Type: <span style="font-style:italic">({{chartType}})</span> -- <span *ngIf="fetchedNumberOfItems && fetchedItemTotal"
+              style="font-weight:800; font-size: 14px">({{fetchedNumberOfItems}} / {{fetchedItemTotal}} Items)
+          </span>
+          </p>
+          <a class="heading-elements-toggle"><i  class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+
+            <!-- <div> This is a visual representation of a line chart</div> -->
+            <div style="display: inline-block" *ngIf="_lineChart">
+              <ngx-charts-line-chart [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+                [legend]="showLegend" [legendTitle]="xAxisLabel" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="legendTitle" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale" [timeline]="timeline" (select)="onSelect($event)"
+                (window:resize)="onResize($event)">
+              </ngx-charts-line-chart>
+            </div>
+
+
+            <!-- <div> This is a visual representation of a area chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_areaChart">
+              <ngx-charts-area-chart [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+                [legend]="showLegend" [legendTitle]="xAxisLabel" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="legendTitle" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale" (select)="onSelect($event)" (window:resize)="onResize($event)">
+              </ngx-charts-area-chart>
+            </div>
+
+
+            <!-- <div> This is a visual representation of a vertical bar chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_verticalBarChart">
+              <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="legendTitle" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (window:resize)="onResize($event)">
+              </ngx-charts-bar-vertical>
+            </div>
+
+            <!-- <div> This is a visual representation of a horizontal bar chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_horizontalBarChart">
+              <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="legendTitle" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="yAxisLabel" [yAxisLabel]="" (select)="onSelect($event)" (window:resize)="onResize($event)">
+              </ngx-charts-bar-horizontal>
+            </div>
+
+
+            <!-- <div> This is a visual representation of a group vertical bar chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_groupedVerticalBarChart">
+              <ngx-charts-bar-vertical-2d [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="legendTitle" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (window:resize)="onResize($event)">
+              </ngx-charts-bar-vertical-2d>
+            </div>
+
+
+            <!-- <div> This is a visual representation of a group horizontal bar chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_groupedHorizontalBarChart">
+              <ngx-charts-bar-horizontal-2d [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="legendTitle" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="yAxisLabel" [yAxisLabel]="xAxisLabel" (select)="onSelect($event)" (window:resize)="onResize($event)">
+              </ngx-charts-bar-horizontal-2d>
+            </div>
+
+
+            <!-- <div> This is a visual representation of a stacked vertical bar chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_stackedVerticalBarChart">
+              <ngx-charts-bar-vertical-stacked [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="legendTitle" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" (window:resize)="onResize($event)">
+              </ngx-charts-bar-vertical-stacked>
+            </div>
+
+
+
+            <!-- <div> This is a visual representation of a pie chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_pieChart">
+              <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="single" [legend]="showLegend" [legendTitle]="legendTitle"
+                [explodeSlices]="explodeSlices" [labels]="showLabels" [doughnut]="doughnut" [gradient]="gradient" (select)="onSelect($event)"
+                (window:resize)="onResize($event)">
+              </ngx-charts-pie-chart>
+            </div>
+
+
+            <!-- <div> This is a visual representation of an advanced pie chart</div> -->
+
+            <div style="display: inline-block" *ngIf="_advancedPieChart">
+              <ngx-charts-advanced-pie-chart [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient" (select)="onSelect($event)"
+                (window:resize)="onResize($event)">
+              </ngx-charts-advanced-pie-chart>
+            </div>
+
+            <div class="col-12" style="text-align:center; margin-top:20px">
+              <!-- BUTTON -->
+              <div class="btn-group" role="group" aria-label="Button group with nested dropdown" *ngIf="!(_verticalBarChart || _horizontalBarChart || _advancedPieChart || _pieChart)">
+                <button class="btn mr-1 mb-1 btn-outline-success btn-lg round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1"
+                  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{xAxisLabel}}</button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Date of Incident')">Date of Incident</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Status')">Status</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Staff')">Staff</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Patrol Supervisor')">Patrol Supervisor</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Caller Name')">Caller Name</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Town')">Town</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('LGA')">LGA</a>
+                  <a class="dropdown-item" (click)="changeXAxisTitle('Staff')">Staff</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Main Chart Area -->
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

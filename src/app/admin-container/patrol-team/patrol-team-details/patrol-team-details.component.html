@@ -1,0 +1,89 @@
+<div style="padding-bottom: 400px">
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+    </div>
+    <div class="col-xl-6 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" (click)="goBack()" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Update Patrol Team Info</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!patrolTeamData && !_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody>
+                  <tr>
+                    <td class="mtn-yellow-bg">Team Name</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.teamName}}</td>
+                    <td class="mtn-yellow-bg">Team Head</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.teamHead}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Police One</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.policeOne}}</td>
+                    <td class="mtn-yellow-bg">Police Two</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.policeTwo}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Patrol Team ID</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.id}}</td>
+                    <td class="mtn-yellow-bg">Patrol Team Branch</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.branch}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Created At</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.created_at}}</td>
+                    <td class="mtn-yellow-bg">Created By</td>
+                    <td *ngIf="patrolTeamData">{{patrolTeamData.created_by}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

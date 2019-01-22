@@ -1,0 +1,57 @@
+<div style="padding-bottom: 400px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Add Position</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-content collpase " [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <form class="form form-horizontal striped-rows form-bordered" [formGroup]="positionForm" (submit)="submit()">
+              <div class="form-body">
+                <h4 class="form-section"></h4>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Position Name</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="position" id="projectinput1" class="form-control" placeholder="Position Name" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(positionForm.controls['position']?.errors?.required && (positionForm.controls['position']?.touched || positionForm.controls['position']?.dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(positionForm.controls['position']?.errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(positionForm.controls['position']?.valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+              </div>
+              <!-- form buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                  <i class="ft-x"></i> Close
+                  </button>
+                <button type="submit" [disabled]="positionForm.invalid" class="btn btn-primary">
+                      <i class="la la-check-square-o"></i> Save Position
+                  </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

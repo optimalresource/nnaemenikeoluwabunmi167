@@ -1,0 +1,76 @@
+
+<div style="padding-bottom: 300px">
+    <!-- Title and Back Button -->
+    <div class="row">
+      <div class="col-xl-5 col-md-6">
+        <div class="card" style="margin-bottom:0px !important">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <div class="media align-items-stretch">
+                <div class="search-filter">
+                  <p class="card-title font-large-1" style="margin-bottom:0px !important">Supervisor & Tasks</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-md-6">
+        <div class="overflow-hidden">
+          <div class="card-content">
+            <div class="my-card-body cleartfix">
+              <div class="media align-items-stretch" style="justify-content:flex-end">
+                <div class="dashed-border" routerLink="/admin/reports/incident" style="width:auto" tabindex="0">
+                  <div class="media-body" style="justify-content:flex-end">
+                    <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                  </div>
+                  <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Title and Back Button -->
+<div class="out-container">
+  <div class="task-container">
+    <h2>To do</h2>
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[doneList, begunTaskList]"
+      class="task-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="task-card" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+
+  <div class="task-container">
+    <h2>Begun Task</h2>
+    <div
+      cdkDropList
+      #begunTaskList="cdkDropList"
+      [cdkDropListData]="begun"
+      [cdkDropListConnectedTo]="[doneList, todoList]"
+      class="task-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="task-card" *ngFor="let item of begun" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+  
+  <div class="task-container">
+    <h2>Done</h2>
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList, begunTaskList]"
+      class="task-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="task-card" *ngFor="let item of done" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+</div>
+</div>

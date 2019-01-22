@@ -1,0 +1,317 @@
+<div style="padding-bottom: 300px">
+  <!-- Title and Back Button -->
+  <div class="row">
+    <div class="col-xl-5 col-md-6">
+      <div class="card" style="margin-bottom:0px !important">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <p class="card-title font-large-1" style="margin-bottom:0px !important">Supervisor & Tasks</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-7 col-md-6">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin/reports/incident" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Title and Back Button -->
+
+  <div class="row">
+    <div class="col-xl-12 col-md-12">
+      <div class="card" style="padding: 15px 20px 0">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter" style="width:100%">
+                <form class="form form-horizontal" [formGroup]="taskForm" (submit)="submit()">
+                  <div class="form-body">
+                    <div class="form-group row">
+                      <select id="supervisor" (change)="changeSupervisor($event)" formControlName="supervisor" name="supervisor"
+                        class="form-control">
+                        <option value="" selected="" disabled="">Select a Patrol Supervisor</option>
+                        <!-- <option value="{{_supervisorOnD?.supervisorId}}" *ngFor="let _supervisorOnD of _supervisorsOnDuty"
+                          style="background-color:brown !important; color: #fff !important"><span></span>{{_supervisorOnD?.supervisorName}}
+                          ------ <span *ngIf="_supervisorOnD?.supervisorName" class="badge badge badge-info float-right">On
+                            Duty</span></option>
+                        <option value="{{_supervisorOffD?.supervisorId}}" *ngFor="let _supervisorOffD of _supervisorsOffDuty"
+                          style="background-color:#ffcc !important; color: #00688f !important">{{_supervisorOffD?.supervisorName}}
+                          ------ <span *ngIf="_supervisorOffD?.supervisorName" class="badge badge badge-info float-right">Off
+                            Duty</span></option> -->
+                        <option value="{{_supervisor?.id}}" *ngFor="let _supervisor of _supervisors" style="background-color:#ffcc !important; color: #00688f !important">{{_supervisor?.firstName}}
+                          ------
+                          <span *ngIf="_supervisor?.status == 'off duty'; else onduty " class="badge badge badge-info float-right">Off
+                            Duty</span>
+                          <ng-template #onduty>
+                            <span class="badge badge badge-info float-right">On
+                              Duty</span>
+                          </ng-template>
+                        </option>
+                        <hr style="width: 100% important">
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-xl-8 col-md-7"> -->
+    <!-- Space Holder -->
+    <!-- </div> -->
+  </div>
+
+  <div class="row" *ngIf="_taskEscort || _tasksIncident">
+    <div class="col-xl-7 col-md-12">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <span class="card-profile-image img"><img class="image" src="data:image/png;base64,{{supervisorData?.image}}"
+                    onerror="this.src='assets/icons/avatar-large.jpg'" alt="avatar"></span>
+              </div>
+              <div class="media-body">
+                <h4>{{supervisorData?.firstName}} {{supervisorData?.surname}}</h4>
+                <span>{{supervisorData?.position}}</span>
+              </div>
+              <div class="align-self-center">
+                <h1>{{supervisorData?.staffId}}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-md-12">
+      <!-- Place holder -->
+    </div>
+  </div>
+
+  <!-- INCIDENT DATA TABLE  -->
+  <div class="row" *ngIf="_tasksIncident">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Incident Tasks<span style="font-style:italic" *ngIf="supervisorData?.firstName">
+              (for {{supervisorData?.firstName}})</span></p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <!-- <li><a (click)="collapse()"><i class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li> -->
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <!-- Adjust Table Rows Control -->
+            <div class="adjustTableRows">
+              <button class="btn dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#fff; border-color:#EEEDED; margin-bottom: 10px">{{_items}}
+                / Page</button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a class="dropdown-item" (click)="adjustTableRows('2')">2 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('10')">10 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('20')">20 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('40')">40 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('60')">60 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('100')">100 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('200')">200 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('500')">500 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('1000')">1000 / Page</a>
+              </div>
+            </div>
+            <!-- Adjust Table Rows Control -->
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="bg-teal bg-lighten-4">
+                  <tr>
+                    <th>#</th>
+                    <th>Patrol Supervisor</th>
+                    <th>Incident Type</th>
+                    <th>Incident Item</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <div *ngIf="!_tasksIncident && !_stopLoading" class="loading">
+                      <img src="assets/icons/loading.gif" alt="">
+                    </div>
+                    <div *ngIf="!_tasksIncident && _stopLoading && !notFound" class="internet-issue">
+                      <h3>Please Check Your Internet Connection</h3>
+                      <span class="no-internet-img"><img src="assets/icons/internet.png" alt=""></span>
+                      <span class="try-btn" (click)="reload()">Then click to Try Again</span>
+                    </div>
+                    <div *ngIf="_stopLoading && notFound">
+                      <h3 style="font-style:italic">No Such Record Inserted into Database Yet</h3>
+                    </div>
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <!-- <div *ngIf="!_tasksIncident" class="loading">
+                          <div class="blockUI" style="display:none"></div>
+                          <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                          <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                            <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                          </div>
+                        </div> -->
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="_tasksIncident">
+                  <tr *ngFor="let itask of _tasksIncident?.reponse?.responseData | paginate: { id: 'task', itemsPerPage: _items, currentPage: p, totalItems: total }; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{itask?.patrolSupervisor}}</td>
+                    <td>{{itask?.incidentType}}</td>
+                    <td>{{itask?.timeOfIncident}}</td>
+                    <td>{{itask?.status}}</td>
+                    <td style="text-align: center">
+                      <div class="btn-group mx-2" task="group" aria-label="Second Group">
+                        <button type="button" class="btn btn-icon btn-outline-success" routerLink="/admin/task/details/{{itask?.id}}"><i
+                            class="la la-eye"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-danger" (click)="delete(itask?.id)"><i
+                            class="la la-close"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls class="my-pagination" (pageChange)="nextPage($event)" id="task"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ INCIDENT DATA TABLE  -->
+
+  <!-- ESCORT DATA TABLE  -->
+  <div class="row" *ngIf="_taskEscort">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Escort Duties<span style="font-style:italic" *ngIf="supervisorData?.firstName">
+              (for {{supervisorData?.firstName}})</span></p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <!-- <li><a (click)="collapse()"><i class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li> -->
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <!-- Adjust Table Rows Control -->
+            <div class="adjustTableRows">
+              <button class="btn dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#fff; border-color:#EEEDED; margin-bottom: 10px">{{_items}}
+                / Page</button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a class="dropdown-item" (click)="adjustTableRows('2')">2 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('10')">10 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('20')">20 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('40')">40 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('60')">60 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('100')">100 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('200')">200 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('500')">500 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('1000')">1000 / Page</a>
+              </div>
+            </div>
+            <!-- Adjust Table Rows Control -->
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="bg-teal bg-lighten-4">
+                  <tr>
+                    <th>#</th>
+                    <th>Patrol Supervisor</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Shift ID</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <div *ngIf="!_taskEscort && !_stopLoading" class="loading">
+                      <img src="assets/icons/loading.gif" alt="">
+                    </div>
+                    <div *ngIf="!_taskEscort && _stopLoading && !notFound" class="internet-issue">
+                      <h3>Please Check Your Internet Connection</h3>
+                      <span class="no-internet-img"><img src="assets/icons/internet.png" alt=""></span>
+                      <span class="try-btn" (click)="reload()">Then click to Try Again</span>
+                    </div>
+                    <div *ngIf="_stopLoading && notFound">
+                      <h3 style="font-style:italic">No Such Record Inserted into Database Yet</h3>
+                    </div>
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <!-- <div *ngIf="!_taskEscort" class="loading">
+                          <div class="blockUI" style="display:none"></div>
+                          <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                          <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                            <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                          </div>
+                        </div> -->
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="_taskEscort">
+                  <tr *ngFor="let etask of _taskEscort?.reponse?.responseData | paginate: { id: 'task', itemsPerPage: _items, currentPage: p, totalItems: total }; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{etask?.supervisorName}}</td>
+                    <td>{{etask?.expectedBeginTime}}</td>
+                    <td>{{etask?.expectedEndTime}}</td>
+                    <td>{{etask?.shiftId}}</td>
+                    <td>{{etask?.locState}}</td>
+                    <td style="text-align: center">
+                      <div class="btn-group mx-2" task="group" aria-label="Second Group">
+                        <button type="button" class="btn btn-icon btn-outline-success" routerLink="/admin/task/details/{{etask?.id}}"><i
+                            class="la la-eye"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-danger" (click)="delete(etask?.id)"><i
+                            class="la la-close"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls class="my-pagination" (pageChange)="nextPage($event)" id="task"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ ESCORT DATA TABLE  -->
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

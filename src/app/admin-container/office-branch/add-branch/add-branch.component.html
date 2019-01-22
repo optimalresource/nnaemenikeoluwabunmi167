@@ -1,0 +1,75 @@
+<div style="padding-bottom: 300px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Add Branch</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-content collpase " [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <form class="form form-horizontal striped-rows form-bordered" [formGroup]="branchForm" (submit)="submit()">
+              <div class="form-body">
+                <h4 class="form-section"></h4>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Branch Name</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="branchName" id="projectinput1" class="form-control" placeholder="Branch Name" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(branchForm.controls['branchName'].errors?.required && (branchForm.controls['branchName'].touched || branchForm.controls['branchName'].dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(branchForm.controls['branchName'].errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(branchForm.controls['branchName'].valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput7">Branch Address</label>
+                  <div class="col-md-6">
+                    <input type="text" formControlName="branchAddress" id="projectinput1" class="form-control" placeholder="Branch Address" name="fname">
+                  </div>
+                  <!-- Validation Message -->
+                  <div *ngIf="(branchForm.controls['branchAddress'].errors?.required && (branchForm.controls['branchAddress'].touched || branchForm.controls['branchAddress'].dirty))"
+                    class="errorRed invalid animated wobble">
+                    Required.
+                  </div>
+                  <div *ngIf="(branchForm.controls['branchAddress'].errors?.minlength)" class="errorRed invalid animated wobble">
+                    Minimum Length is 3.
+                  </div>
+                  <div *ngIf="(branchForm.controls['branchAddress'].valid)" class="successGreen valid animated flash">
+                    OK.
+                  </div>
+                  <!--/End Validation Message -->
+                </div>
+              </div>
+              <!-- form buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-success mr-1" (click)="goBack()">
+                  <i class="ft-x"></i> Close
+                  </button>
+                <button type="submit" [disabled]="branchForm.invalid" class="btn btn-primary">
+                      <i class="la la-check-square-o"></i> Save Branch
+                  </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

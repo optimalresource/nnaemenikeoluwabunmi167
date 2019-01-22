@@ -1,0 +1,122 @@
+<div>
+  <!-- Title and Back Button -->
+  <div class="row">
+    <div class="col-xl-5 col-md-5">
+      <div class="card" style="margin-bottom:0px !important">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <p class="card-title font-large-1" style="margin-bottom:0px !important">Incident Status</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-7 col-md-7">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin/reports/incident" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/End Title and Back Button -->
+
+  <div class="row">
+    <div class="col-xl-4 col-md-5">
+      <div class="card">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="search-filter">
+                <!-- <div class="font-medium-2">Change Status:</div> -->
+                <!-- Adjust Table Rows Control -->
+                <div class="adjustTableRows">
+                  <button class="btn dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="background-color:#fff; border-color:#EEEDED; margin: 10px 0">This Incident is {{_status}}</button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a *ngIf="(_status == 'Open')" class="dropdown-item" (click)="changeIncidentStatus('Open')">Open Incident</a>
+                    <a *ngIf="(_status == 'Open') || (_status == 'Reopened')" class="dropdown-item" (click)="changeIncidentStatus('resolved')">Close Incident</a>
+                    <a *ngIf="(_status == 'Closed')" class="dropdown-item" (click)="changeIncidentStatus('reopened')">Reopen Incident</a>
+
+                  </div>
+                </div>
+                <!-- Adjust Table Rows Control -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 col-md-7">
+      <!-- Space Holder -->
+    </div>
+  </div>
+
+
+  <form class="form form-horizontal striped-rows form-bordered" [formGroup]="updateForm" (submit)="submit()">
+
+    <!-- Remarks -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+          <div class="card-header">
+            <p class="card-title font-large-1">Pregress Update <span style="font-style:italic">(Optional)</span></p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+                <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase" [ngClass]="_toggleCollapse ? 'show' : ''">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-pencil-square"></i> Remarks</h4>
+                  <div class="form-group row last">
+                    <label class="col-md-3 label-control" for="remarks">Remarks</label>
+                    <div class="col-md-6">
+                      <textarea id="remarks" rows="5" formControlName="remarks" class="form-control" name="remarks" placeholder="Add update on progress so far"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Remarks -->
+
+    <!-- form buttons -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="updateForm.invalid" class="btn btn-primary">
+          <i class="la la-check-square-o"></i> Save Remark
+      </button>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-xl-12 col-md-12">
+      <div>
+        <p class="font-large-1">Update History</p>
+        <h3 style="font-style:italic">No Progress Update has been added to this Incident. Hence, no update history.</h3>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>

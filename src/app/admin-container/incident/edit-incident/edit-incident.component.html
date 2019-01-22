@@ -1,0 +1,454 @@
+<div>
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" *ngIf="staffData">
+              <div class="align-self-center">
+                <span class="card-profile-image img"><img class="image" src="{{staffData.staffImage}}" onerror="this.src='assets/icons/avatar-large.jpg'" alt="avatar"></span>
+              </div>
+              <div class="media-body">
+                <h4>{{staffData.staffFirstName}} {{staffData.staffSurname}}</h4>
+                <span>{{staffData.staffDeparment}}</span>
+              </div>
+              <div class="align-self-center">
+                <h1>{{staffData.staffId}}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" style="width:auto" (click)="goBack()">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center">
+                  <i class="la la-close font-large-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Staff Details</p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <div *ngIf="!staffData && !_stopLoading" class="loading">
+                      <div class="blockUI" style="display:none"></div>
+                      <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                      <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="staffData">
+                  <tr>
+                    <td class="mtn-yellow-bg">First Name</td>
+                    <td>{{staffData.staffFirstName}}</td>
+                    <td class="mtn-yellow-bg">Last Name</td>
+                    <td>{{staffData.staffSurname}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Other Names</td>
+                    <td>{{staffData.staffOtherName}}</td>
+                    <td class="mtn-yellow-bg">Department</td>
+                    <td>{{staffData.staffDeparment}}</td>
+                  </tr>
+                  <tr>
+                    <td class="mtn-yellow-bg">Designation</td>
+                    <td>{{staffData.staffDesignation}}</td>
+                    <td class="mtn-yellow-bg">Email</td>
+                    <td>{{staffData.staffEmail}}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Phone Line 1</td>
+                    <td>{{staffData.staffNumber}}</td>
+                    <td class="mtn-yellow-bg">Employment Type**</td>
+                    <td>Full Time</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Staff ID</td>
+                    <td>{{staffData.staffId}}</td>
+                    <td class="mtn-yellow-bg">Gender</td>
+                    <td>{{staffData.staffGender}}</td>
+                  </tr>
+
+                  <tr>
+                    <td class="mtn-yellow-bg">Home Address</td>
+                    <td>{{staffData.staffHomeAddress}}</td>
+                    <td class="mtn-yellow-bg">Office Branch</td>
+                    <td>{{staffData.staffBranch}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="form form-horizontal striped-rows form-bordered" [formGroup]="incidentForm" (submit)="submit()">
+    <!-- Incident Location Details Card -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title font-large-1">Incident Location</p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase show">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-map-marker"></i> Incident Location Details</h4>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="incidentType">Incident Type *</label>
+                    <div class="col-md-6">
+                      <select formControlName="incidentType" id="incidentType" name="incidentType" class="form-control">
+                        <option value="" disabled selected>Incident Type</option>
+                        <option value="{{incidentType.id}}" *ngFor="let incidentType of _incidentTypes">{{incidentType.name}}</option>
+                    </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="state">State *</label>
+                    <div class="col-md-6">
+                      <select (change)="checkStateSelected($event.target.value)" formControlName="state" id="state" name="state" class="form-control">
+                        <option value="" selected="" disabled="">Select a State</option>
+                        <option *ngFor="let state of states"  value="{{state.id}}">
+                              {{state.state}}
+                        </option>
+                    </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="lga">Local Government *</label>
+                    <div class="col-md-6">
+                      <select formControlName="lga" id="lga" name="lga" class="form-control">
+                        <option value="" selected="" disabled="">Select a State first</option>
+                        <option *ngFor="let lga of LGAs"  value="{{lga}}">
+                            {{lga}}
+                      </option>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="town">Town</label>
+                    <div class="col-md-6">
+                      <input type="text" formControlName="town" id="town" class="form-control" placeholder="Name of Town" name="town">
+                    </div>
+                  </div>
+                  <div class="form-group row last">
+                    <label class="col-md-3 label-control" for="address">Address/Description *</label>
+                    <div class="col-md-6">
+                      <textarea formControlName="address" id="address" rows="5" class="form-control" name="address" placeholder="Enter Address/Description"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End - Incident Location Details Card -->
+
+    <!-- Casualty Details Card -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title font-large-1">Casualty Details</p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase show">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-fire"></i> Casualty Details</h4>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="casualty">Casualty</label>
+                    <div class="col-md-6">
+                      <fieldset>
+                        <div class="icheckbox_square-yellow hover" (click)="checkBoxControl()" [ngClass]="{'checked': checked == true}" style="position: relative;">
+                          <input type="checkbox" id="input-12" formControlName="casualty" checked="" style="position: absolute; opacity: 0;">
+                          <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+
+                  <div class="form-group row" *ngIf="checked">
+                    <label class="col-md-3 label-control" for="casualtyLevel">Casualty Level</label>
+                    <div class="col-md-6">
+                      <select id="casualtyLevel" formControlName="casualtyLevel" name="casualtyLevel" class="form-control">
+                      <option value="" selected="" disabled="">Select Casualty Level</option>
+                      <option value="{{casualty.id}}" *ngFor="let casualty of _casualtyLevels">{{casualty.level}}</option>
+                    </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Casualty Details Card -->
+
+    <!-- Calling On Behalf Of -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title font-large-1">Calling On Behalf Of</p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase show">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-phone"></i> Calling On Behalf Of:</h4>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="projectinput6">On Behalf of Staff</label>
+                    <div class="col-md-6">
+                      <fieldset>
+                        <div class="icheckbox_square-yellow hover" (click)="checkBoxControl1()" [ngClass]="{'checked': checked1 == true}" style="position: relative;">
+                          <input type="checkbox" id="input-12" formControlName="onBehalf" checked="" style="position: absolute; opacity: 0;">
+                          <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+
+                  <div class="form-group row" *ngIf="checked1">
+                    <label class="col-md-3 label-control" for="projectinput6">Relationship</label>
+                    <div class="col-md-6">
+                      <select id="projectinput6" formControlName="relationship" name="relationship" class="form-control">
+                      <option value="" selected="" disabled="">Relationship with Caller</option>
+                      <option value="{{rship.id}}" *ngFor="let rship of rships">{{rship.rship}}</option>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="form-group row" *ngIf="checked1">
+                    <label class="col-md-3 label-control" for="callerName">Callers Name</label>
+                    <div class="col-md-6">
+                      <input type="text" formControlName="callerName" (keyup)="setCallerName($event)" id="callerName" class="form-control" placeholder="Caller's Name"
+                        name="callerName">
+                    </div>
+                  </div>
+                  <div class="form-group row" *ngIf="checked1">
+                    <label class="col-md-3 label-control" for="callerNumber">Phone Number</label>
+                    <div class="col-md-6">
+                      <input type="text" formControlName="callerNumber" (keyup)="setCallerPhone($event)" id="callerNumber" class="form-control"
+                        placeholder="Caller's Number" name="callerNumber">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Calling On Behalf Of -->
+
+    <!-- Remarks -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title font-large-1">Remarks</p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase show">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-pencil-square"></i> Remarks</h4>
+                  <div class="form-group row last">
+                    <label class="col-md-3 label-control" for="remarks">Remarks *</label>
+                    <div class="col-md-6">
+                      <textarea id="remarks" rows="5" formControlName="remarks" class="form-control" name="remarks" placeholder="Enter Address/Description"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Remarks -->
+
+    <!-- Time of Incidence -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title font-large-1">Time of Incidence</p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase show">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-clock-o"></i> Time of Incidence</h4>
+                  <div class="form-group row last">
+                    <label class="col-md-3 label-control" for="animate">Date of Occurance *</label>
+                    <div class="col-md-6 col-sm-12">
+                      <div class="form-group mb-3">
+                        <mat-form-field style=" position:relative; width:100%">
+                          <input class="form-control" (dateChange)="changeDetection($event)" formControlName="dateOfIncident" id="animate" placeholder="Select Date"
+                            matInput [matDatepicker]="dp3" style="padding-left: 40px;">
+                          <mat-datepicker-toggle matSuffix [for]="dp3" style="position:absolute;bottom:0px;left:5px;"></mat-datepicker-toggle>
+                          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row last">
+                    <label class="col-md-3 label-control" for="timeOfIncident">Time of Occurance *</label>
+                    <div class="col-md-6 col-sm-12">
+                      <div class="form-group mb-3">
+                        <input type="text" formControlName="timeOfIncident" id="timeOfIncident" class="form-control" placeholder="Time of Incident"
+                          name="callerNumber">
+                        <!-- <timepicker formControlName="timeOfIncident" id="timeOfIncident"></timepicker> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Time of Incidence -->
+
+    <!-- Patrol Head -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-title font-large-1">Assign Patrol Team</p>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            <div class="heading-elements">
+              <ul class="list-inline mb-0">
+                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-content collpase show">
+            <div class="card-body">
+              <div class="form form-horizontal striped-rows form-bordered">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="la la-user"></i>Assign Patrol Team Head</h4>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="patrolTeamHead">Select Supervisor</label>
+                    <div class="col-md-6">
+                      <select id="patrolTeamHead" formControlName="patrolTeamHead" name="patrolTeamHead" class="form-control">
+                          <option value="" disabled selected>Patrol Supervisor</option>
+                          <option value="{{patrolMember.id}}" *ngFor="let patrolMember of _patrolMembers">{{patrolMember.firstName}} {{patrolMember.surname}} --- {{patrolMember.position}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/End Patrol Head -->
+
+    <!-- form buttons -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-warning mr-1" routerLink="/admin/incident">
+      <i class="ft-x"></i> Cancel
+    </button>
+      <button type="submit" [disabled]="incidentForm.invalid" class="btn btn-primary">
+        <i class="la la-check-square-o"></i> Update
+    </button>
+    </div>
+  </form>
+
+</div>
+
+<toaster-container [toasterconfig]="config1"></toaster-container>

@@ -1,0 +1,212 @@
+<!-- fixed-top-->
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light  navbar-border navbar-shadow navbar-brand-center">
+  <div class="navbar-wrapper">
+    <div class="navbar-header">
+      <ul class="nav navbar-nav flex-row">
+        <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
+              class="ft-menu font-large-1"></i></a></li>
+        <li class="nav-item">
+          <a class="navbar-brand" href="index.html" style="padding:0 !important">
+            <img class="brand-logo" alt="MTN Logo" style="width:150px !important; height:auto; margin-top:5px !important"
+              src="assets/icons/MTN-Logo1.png">
+            <!-- <h1 class="brand-text warning">MTN CRM</h1> -->
+          </a>
+        </li>
+        <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i
+              class="la la-ellipsis-v"></i></a></li>
+      </ul>
+    </div>
+    <div class="navbar-container content">
+      <div class="collapse navbar-collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav mr-auto float-left">
+          <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs"><i class="ft-menu"></i></a></li>
+          <li class="nav-item d-none d-md-block" (click)="globalReload()"><a class="nav-link nav-link-expand"><i class="ficon ft-rotate-cw"></i></a></li>
+          <li class="dropdown nav-item mega-dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown">Search</a>
+          </li>
+          <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon ft-search"></i></a>
+            <div class="search-input">
+              <input class="input" type="text" placeholder="Explore CRM...">
+            </div>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav float-right">
+          <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
+              data-toggle="dropdown"><span class="mr-1">Hello, <span class="user-name text-bold-700"> Admin</span></span><span
+                class="avatar avatar-online"><img src="assets/icons/admin-avatar.png" alt="avatar"><i></i></span></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <!-- <a class="dropdown-item" routerLink="/home"><i class="ft-user"></i> Edit Profile</a> -->
+              <a class="dropdown-item" routerLink="/home/inbox"><i class="ft-mail"></i> My Inbox</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" (click)="logout()"><i class="ft-power"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="app-content content">
+  <div class="content-wrapper" style="padding-bottom: 500px; height:auto">
+    <div class="content-header row" style="">
+    </div>
+
+    <div class="main-menu menu-static menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+      <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+          <li class=" nav-item" routerLink="/admin/dashboard"><a><i class="la la-television"></i><span class="menu-title"
+                data-i18n="">Dashboard</span></a>
+          </li>
+
+          <!-- Incident & Escalation -->
+          <li class=" navigation-header"><span data-i18n="nav.category.admin-panels">Incident & Casualties</span><i
+              class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-sitemap"></i><span class="menu-title" data-i18n="nav.templates.main">Incident
+                Types</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/incident-type/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add
+                  Incident Type</a></li>
+              <li routerLink="/admin/incident-type/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All
+                  Incident Types</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-fire"></i><span class="menu-title" data-i18n="nav.templates.main">Incident</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/incident"><a class="menu-item" data-i18n="nav.templates.vert.main">Report Incident</a></li>
+              <li routerLink="/admin/incident/update"><a class="menu-item" data-i18n="nav.templates.horz.main">Update
+                  Incident</a></li>
+              <!-- <li routerLink="/admin/incident/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Incidents</a></li> -->
+              <!-- <li><a class="menu-item" data-i18n="nav.templates.horz.main">Incident Wizard</a></li> -->
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-paste"></i><span class="menu-title" data-i18n="nav.templates.main">Reports</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/reports/incident"><a class="menu-item" data-i18n="nav.templates.vert.main">Incident
+                  Reports</a></li>
+              <!-- <li><a class="menu-item" data-i18n="nav.templates.horz.main">All Reports</a></li> -->
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-line-chart"></i><span class="menu-title" data-i18n="nav.templates.main">Casualties
+                Level</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/casualty/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add Level</a></li>
+              <li routerLink="/admin/casualty/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Levels</a></li>
+              <li><a class="menu-item" data-i18n="nav.templates.horz.main">Add People to Level</a></li>
+            </ul>
+          </li>
+
+          <!-- Manage Security -->
+          <li class=" navigation-header"><span data-i18n="nav.category.admin-panels">Manage Response</span><i class="la la-ellipsis-h ft-minus"
+              data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Shift</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/shift/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Assign Shift</a></li>
+              <li routerLink="/admin/shift/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Shifts</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-cab"></i><span class="menu-title" data-i18n="nav.templates.main">Vehicle</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/vehicle/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add Vehicle</a></li>
+              <li routerLink="/admin/vehicle/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Vehicles</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-tasks"></i><span class="menu-title" data-i18n="nav.templates.main">Task</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/task/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add Task</a></li>
+              <li routerLink="/admin/task/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Tasks</a></li>
+              <li routerLink="/admin/task/supervisor-task"><a class="menu-item" data-i18n="nav.templates.horz.main">Supervisors
+                  & Tasks</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-flag-o"></i><span class="menu-title" data-i18n="nav.templates.main">Security
+                Positions</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/position/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add
+                  Security Position</a></li>
+              <li routerLink="/admin/position/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All
+                  Security Positions</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-user"></i><span class="menu-title" data-i18n="nav.templates.main">Patrol
+                Team Member</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/patrol-member/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add
+                  Patrol Member</a></li>
+              <li routerLink="/admin/patrol-member/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All
+                  Patrol Members</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-cab"></i><span class="menu-title" data-i18n="nav.templates.main">Patrol
+                Teams</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/patrol-team/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add
+                  Patrol Team</a></li>
+              <li routerLink="/admin/patrol-team/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All
+                  Patrol Teams</a></li>
+            </ul>
+          </li>
+
+          <!-- Manage Staff -->
+          <li class=" navigation-header"><span data-i18n="nav.category.admin-panels">Manage Staff</span><i class="la la-ellipsis-h ft-minus"
+              data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-building"></i><span class="menu-title" data-i18n="nav.templates.main">Office
+                Branch</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/branch/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add Branch</a></li>
+              <li routerLink="/admin/branch/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Branches</a></li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item has-sub"><a><i class="la la-share-alt"></i><span class="menu-title" data-i18n="nav.templates.main">Department</span></a>
+          <ul class="menu-content">
+            <li><a class="menu-item" data-i18n="nav.templates.vert.main">Add Department</a></li>
+            <li><a class="menu-item" data-i18n="nav.templates.horz.main">All Departments</a></li>
+          </ul>
+        </li> -->
+          <!-- <li class="nav-item has-sub"><a><i class="la la-briefcase"></i><span class="menu-title" data-i18n="nav.templates.main">Designation</span></a>
+          <ul class="menu-content">
+            <li><a class="menu-item" data-i18n="nav.templates.vert.main">Add Designation</a></li>
+            <li><a class="menu-item" data-i18n="nav.templates.horz.main">All Designations</a></li>
+          </ul>
+        </li> -->
+          <li class="nav-item has-sub"><a><i class="la la-users"></i><span class="menu-title" data-i18n="nav.templates.main">Staff</span></a>
+            <ul class="menu-content">
+              <!-- <li routerLink="/admin/staff/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add Staff</a></li> -->
+              <li routerLink="/admin/staff/search"><a class="menu-item" data-i18n="nav.templates.horz.main">Staff
+                  Search</a></li>
+              <!-- <li><a class="menu-item" data-i18n="nav.templates.horz.main">Staff Wizard</a></li> -->
+            </ul>
+          </li>
+
+          <!-- Manage Staff -->
+          <li class=" navigation-header"><span data-i18n="nav.category.admin-panels">Manage User</span><i class="la la-ellipsis-h ft-minus"
+              data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-user-plus"></i><span class="menu-title" data-i18n="nav.templates.main">User
+                Role</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/user-role/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add User
+                  Role</a></li>
+              <li routerLink="/admin/user-role/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All User
+                  Roles</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub"><a><i class="la la-user"></i><span class="menu-title" data-i18n="nav.templates.main">User</span></a>
+            <ul class="menu-content">
+              <li routerLink="/admin/user/add"><a class="menu-item" data-i18n="nav.templates.vert.main">Add User</a></li>
+              <!-- <li routerLink="/admin/user/all"><a class="menu-item" data-i18n="nav.templates.horz.main">All Users</a></li> -->
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content-body" style="height:auto !important; overflow:visible;">
+      <!-- All Admin Pages go here -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<!-- ////////////////////////////////////////////////////////////////////////////-->

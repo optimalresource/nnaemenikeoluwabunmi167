@@ -1,0 +1,223 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.mtn-yellow-bg {
+  background-color: #ffcc00;
+  color: #fff;
+}
+
+
+#td-clock-1 .td-clock {
+  color: #555;
+  background: #FFF;
+  box-shadow: 0 0 0 1px #ffcc00, 0 0 0 8px rgba(0, 0, 0, 0.05) !important;
+  ;
+}
+
+#td-clock-1 .td-clock .td-time span.on {
+  color: #ffcc00 !important;
+}
+
+#td-clock-1 .td-clock:before {
+  border-color: #ffcc00 !important;
+}
+
+#td-clock-1 .td-select:after {
+  box-shadow: 0 0 0 1px #ffcc00 !important;
+}
+
+#td-clock-1 .td-clock:before,
+#td-clock-1 .td-select:after {
+  background: #FFF;
+}
+
+#td-clock-1.td-lancette {
+  border: 2px solid #ffcc00 !important;
+  opacity: 0.1
+}
+
+#td-clock-1 .td-lancette div:after {
+  background: #ffcc00 !important;
+}
+
+#td-clock-1 .td-bulletpoint div:after {
+  background: #ffcc00 !important;
+  opacity: 0.1
+}
+
+#dd-w-1 {
+  font-weight: bold;
+}
+
+#dd-w-1 .dd-w-c,
+#dd-w-1 .dd-ul li,
+#dd-w-1 .dd-s-b-ul ul {
+  width: 200px;
+}
+
+#dd-w-1 .dd-w-c {
+  color: #1D2B36;
+  background: #FFFFFF;
+  border: 1px solid #ffcc00 !important;
+  box-shadow: 0 0 10px 0 rgba(0, 136, 204, 0.45);
+  border-radius: 8px
+}
+
+#dd-w-1 .dd-w-c,
+#dd-w-1 .dd-s-b {
+  background: #FFFFFF
+}
+
+#dd-w-1 .dd-sun,
+#dd-w-1 .dd-s-b-ul li.dd-on {
+  color: #ffcc00 !important
+}
+
+#dd-w-1 .dd-c .dd-s,
+#dd-w-1 .dd-s-b-s,
+#dd-w-1 .dd-s-b-sub-y,
+#dd-w-1 .dd-sub-y {
+  background: #ffcc00 !important;
+  color: #FFFFFF
+}
+
+#dd-w-1 .dd-c .dd-s a,
+#dd-w-1 .dd-c .dd-s a:hover {
+  color: #FFFFFF
+}
+
+#dd-w-1 .dd-c:after {
+  border-left: 1px solid #ffcc00 !important;
+  border-top: 1px solid #ffcc00 !important
+}
+
+#dd-w-1.dd-bottom .dd-c:after {
+  background: #FFFFFF
+}
+
+#dd-w-1.dd-top .dd-c:after {
+  background: #ffcc00 !important
+}
+
+#dd-w-1 .dd-n,
+#dd-w-1 .dd-sun {
+  color: #ffcc00 !important
+}
+
+#dd-w-1 .dd-sub-y .dd-n {
+  color: #FFFFFF
+}
+
+#dd-w-1 .dd-c .dd-s:hover,
+#dd-w-1 .dd-s-b-s:hover {
+  background: #ffcc00 !important;
+}
+
+/* Remove bootstrap default focus outline */
+.btn:focus,
+.btn:active,
+div:focus,
+div:active,
+svg:focus,
+svg:active,
+button:focus,
+button:active {
+  outline: none !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  height: 5px !important;
+  /* width:5px !important; */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffcc00;
+  border-radius: 10px;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+  border-color: #e5e5e5;
+  background: #ffcc00;
+  color: #00688f;
+  font-weight: 700;
+  position: relative;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.428571429;
+  text-decoration: none;
+  border: 1px solid #ddd;
+}
+
+/* .try-btn {
+    text-align: center;
+    border: 1px solid #b2dfdb ;
+    padding: 5px 0;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .try-btn:hover, .try-btn:focus {
+    background: #b2dfdb;
+  } */
+
+.try-btn {
+  text-align: center;
+  border: 1px solid #ffcc00;
+  padding: 5px 0;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.try-btn:hover,
+.try-btn:focus {
+  background: #ffcc00;
+}
+
+.btn-outline-info:hover {
+  color: #fff;
+  border-color: #1e9ff2 !important;
+  background-color: #1e9ff2 !important;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #ffcc00 !important;
+}
+
+.custom-scroll.mat-autocomplete-panel::-webkit-scrollbar {
+  height: 5px !important;
+  width: 5px !important;
+}
+
+.offColor {
+  background-color: #ffcc !important;
+  color: #00688f !important;
+}
+
+.errorRed {
+  color: red;
+}
+
+.successGreen {
+  color: green
+}
+
+@media (max-width: 767px) {
+
+  .successGreen,
+  .errorRed {
+    padding: 0;
+    padding-left: 1.2rem
+  }
+}

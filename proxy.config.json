@@ -1,0 +1,11 @@
+{
+    "/crms/mainbox": {
+        "target": "https://moredrops.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/crms/mainbox": "https://moredrops.com/crms/mainbox"
+        }
+    }
+}

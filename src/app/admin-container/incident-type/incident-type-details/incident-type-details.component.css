@@ -1,0 +1,57 @@
+.media-body {
+    padding-left: 10px;
+}
+
+.my-card-body {
+    padding: 1rem 1.5rem;
+}
+
+.media-body {
+    vertical-align: middle;
+    align-items: center;
+    display: grid;
+    padding: 15px 10px;    
+}
+
+.dashed-border {
+    display: flex;
+    border:2px dashed #f4f5fa;
+}
+
+.dashed-border:hover {
+    border:2px dashed #626e82;
+    cursor:pointer;
+    box-sizing: border-box;
+}
+
+.mb-3, .my-3 {
+    margin-bottom: 0rem !important;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+    border-color: #e5e5e5;
+    background: #b2dfdb;
+    color: #000;
+    font-weight: 700;
+    position: relative;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.428571429;
+    text-decoration: none;
+    border: 1px solid #ddd;
+  }
+
+  .errorRed {
+    color:red; 
+}
+
+.successGreen {
+    color:green
+}
+
+@media (max-width: 767px) {
+    .successGreen, .errorRed {
+        padding:0; 
+        padding-left:1.2rem
+    }
+}

@@ -1,0 +1,93 @@
+<div class="vertical-layout vertical-menu-modern 1-column  bg-full-screen-image menu-expanded blank-page blank-page" data-open="click"
+  data-menu="vertical-menu-modern" data-col="1-column">
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="app-content content" style="background: linear-gradient(90deg,#002060 15%,#037bc1) !important; margin-left:0 !important; margin-top: -5rem !important;">
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-bodyy">
+        <section class="flexbox-container">
+          <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="col-md-4 col-10 box-shadow-2 p-0">
+              <div class="card border-grey border-lighten-3 px-1 py-1 m-0" style="box-shadow:0 1px 25px 5px rgba(62, 57, 107, .8) !important">
+                <div class="card-header border-0">
+                  <div class="card-title text-center">
+                    <!-- <img src="assets/app-assets/images/logo/logo-dark.png" alt="branding logo"> -->
+                    <h2 class="brand-text warning">MTN CRM</h2>
+                  </div>
+                  <!-- <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Follow us on</span></h6> -->
+                </div>
+                <div class="card-content">
+                  <!-- <div class="text-center">
+                    <a class="btn btn-social-icon mr-1 mb-1 btn-outline-facebook"><span class="la la-facebook"></span></a>
+                    <a class="btn btn-social-icon mr-1 mb-1 btn-outline-twitter"><span class="la la-twitter"></span></a>
+                    <a class="btn btn-social-icon mr-1 mb-1 btn-outline-linkedin"><span class="la la-linkedin font-medium-4"></span></a>
+                    <a class="btn btn-social-icon mr-1 mb-1 btn-outline-github"><span class="la la-google-plus font-medium-4"></span></a>
+                  </div> -->
+                  <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1"><span>Enter Account Details Below</span></p>
+                  <div class="card-body">
+                    <form [formGroup]="loginForm" (submit)="login()" style="margin-bottom: 50px !important">
+                      <fieldset class="form-group position-relative has-icon-left">
+                        <input type="text" class="form-control" formControlName="username" autocomplete="off" id="user-name" placeholder="Your Username"
+                          required>
+                        <div class="form-control-position">
+                          <i class="ft-user"></i>
+                        </div>
+
+                        <!-- Validation Message -->
+                        <div style="color:red" *ngIf="(loginForm.controls['username'].errors?.required && (loginForm.controls['username'].touched || loginForm.controls['username'].dirty))"
+                          class="invalid animated fadeIn">
+                          Required.
+                        </div>
+                        <div style="color:red" *ngIf="(loginForm.controls['username'].errors?.minlength)" class="invalid animated fadeIn">
+                          Minimum Length is 3.
+                        </div>
+                        <!-- <div style="color:green" *ngIf="(loginForm.controls['username'].valid)" class="valid animated flash">
+                          OK.
+                        </div> -->
+                        <!--/End Validation Message -->
+                      </fieldset>
+                      <fieldset class="form-group position-relative has-icon-left">
+                        <input type="password" class="form-control" formControlName="password" id="user-password" autocomplete="new-password" placeholder="Enter Password"
+                          required>
+                        <div class="form-control-position">
+                          <i class="la la-key"></i>
+                        </div>
+
+                        <!-- Validation Message -->
+                        <div style="color:red" *ngIf="(loginForm.controls['password'].errors?.required && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty))"
+                          class="invalid animated fadeIn">
+                          Required.
+                        </div>
+                        <div style="color:red" *ngIf="(loginForm.controls['password'].errors?.minlength)" class="invalid animated fadeIn">
+                          Minimum Length is 3.
+                        </div>
+                        <!-- <div style="color:green" *ngIf="(loginForm.controls['password'].valid)" class="valid animated flash">
+                          OK.
+                        </div> -->
+                        <!--/End Validation Message -->
+                      </fieldset>
+                      <div class="form-group row">
+                        <!-- <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a class="card-link">Forgot Password?</a></div> -->
+                      </div>
+                      <button type="submit" [disabled]="!loginForm.valid" class="btn btn-outline-success btn-block"><i class="ft-unlock"></i> {{_loginBtnMssg}}</button>
+                      <div class="alert alert-danger border-0 mb-2" role="alert" style="margin-top: 10px;" *ngIf="errMssg">
+                        <strong>Oop Sorry!</strong> {{errMssg}}.
+                      </div>
+                    </form>
+                  </div>
+                  <!-- <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1" ><span>Only Authorized Personnels are allowed here</span></p> -->
+                  <!-- <div class="card-body">
+                    <button class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Go Back to Job Portal</button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+</div>

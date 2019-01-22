@@ -1,0 +1,159 @@
+<div style="padding-bottom: 300px">
+
+  <div class="row">
+    <div class="col-xl-7 col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch">
+              <fieldset class="form-group position-relative">
+                <input type="text" (keyup)="searchTerm$.next($event.target.value)" class="form-control round" id="iconLeft10" placeholder="Search bar">
+                <div class="form-control-position">
+                </div>
+              </fieldset>
+
+              <div class="search-filter">
+                <div class="font-medium-2">&nbsp;</div>
+                <!-- BUTTON -->
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button class="btn btn-warning round dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{filterName}}</button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" (click)="filterBy('Cancelled')">Cancelled</a>
+                    <a class="dropdown-item" (click)="filterBy('Completed')">Completed</a>
+                    <a class="dropdown-item" (click)="filterBy('Active')">Active</a>
+                    <a class="dropdown-item" (click)="filterBy('Idle')">Idle</a>
+                    <a class="dropdown-item" (click)="filterBy('Reassigned')">Reassigned</a>
+                    <a class="dropdown-item" (click)="filterBy('Supervisor')">Supervisor</a>
+                    <a class="dropdown-item" (click)="filterBy('Created By')">Created By</a>
+                    <a class="dropdown-item" (click)="filterBy('No Filter')">No Filter</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-5 col-md-12">
+      <div class="overflow-hidden">
+        <div class="card-content">
+          <div class="my-card-body cleartfix">
+            <div class="media align-items-stretch" style="justify-content:flex-end">
+              <div class="dashed-border" routerLink="/admin" style="width:auto" tabindex="0">
+                <div class="media-body" style="justify-content:flex-end">
+                  <h2 style="cursor:pointer; margin-bottom: 0rem !important;">Close</h2>
+                </div>
+                <div class="align-self-center"><i class="la la-close font-large-1"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- DATA TABLE  -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card" [ngClass]="_toggleExpand ? 'card-fullscreen' : ''">
+        <div class="card-header">
+          <p class="card-title font-large-1">Tasks<span style="font-style:italic" *ngIf="keyword">: (By: {{filterName}} - Keyword: "{{keyword}}")</span></p>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a (click)="collapse()"><i  class="" [ngClass]=" _toggleCollapseIcon ? 'ft-plus' : 'ft-minus'"></i></a></li>
+              <li><a (click)="reload()"><i  class="ft-rotate-cw"></i></a></li>
+              <li><a (click)="expand()"><i  class="" [ngClass]=" _toggleExpandIcon ? 'ft-maximize' : 'ft-minimize'"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-content collapse" [ngClass]="_toggleCollapse ? 'show' : ''">
+          <div class="card-body">
+            <!-- Adjust Table Rows Control -->
+            <div class="adjustTableRows">
+              <button class="btn dropdown-toggle dropdown-menu-right box-shadow-2 px-2" id="btnGroupDrop1" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" style="background-color:#fff; border-color:#EEEDED; margin-bottom: 10px">{{_items}} / Page</button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a class="dropdown-item" (click)="adjustTableRows('2')">2 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('10')">10 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('20')">20 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('40')">40 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('60')">60 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('100')">100 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('200')">200 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('500')">500 / Page</a>
+                <a class="dropdown-item" (click)="adjustTableRows('1000')">1000 / Page</a>
+              </div>
+            </div>
+            <!-- Adjust Table Rows Control -->
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="bg-teal bg-lighten-4">
+                  <tr>
+                    <th>#</th>
+                    <th>Patrol Supervisor</th>
+                    <th>Staff</th>
+                    <th>Location</th>
+                    <th>Begun</th>
+                    <th>Cancelled</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!-- Loading and Internet Error -->
+                <caption>
+                  <div class="move-to-center">
+                    <div *ngIf="!_tasks && !_stopLoading" class="loading">
+                      <img src="assets/icons/loading.gif" alt="">
+                    </div>
+                    <div *ngIf="!_tasks && _stopLoading && !notFound" class="internet-issue">
+                      <h3>Please Check Your Internet Connection</h3>
+                      <span class="no-internet-img"><img src="assets/icons/internet.png" alt=""></span>
+                      <span class="try-btn" (click)="reload()">Then click to Try Again</span>
+                    </div>
+                    <div *ngIf="_stopLoading && notFound">
+                      <h3 style="font-style:italic">No Such Record Inserted into Database Yet</h3>
+                    </div>
+                    <!-- ALTERNATIVE LOADING ICON -->
+                    <!-- <div *ngIf="!_tasks" class="loading">
+                            <div class="blockUI" style="display:none"></div>
+                            <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.513792; cursor: default; position: absolute;"></div>
+                            <div class="blockUI blockMsg blockElement" style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width:100%; top: 50%; text-align: center; color: rgb(0, 0, 0); border: 0px; cursor: wait;">
+                              <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+                            </div>
+                          </div> -->
+                  </div>
+                </caption>
+                <!--/End Loading and Internet Error -->
+                <tbody *ngIf="_tasks">
+                  <tr *ngFor="let task of _tasks.reponse.responseData | paginate: { id: 'task', itemsPerPage: _items, currentPage: p, totalItems: total }; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{task.supervisorName}}</td>
+                    <td>{{task.staffConcerned}}</td>
+                    <td>{{task.locState}}</td>
+                    <td>{{task.taskBegun}}</td>
+                    <td>{{task.taskCanceled}}</td>
+                    <td style="text-align: center">
+                      <div class="btn-group mx-2" task="group" aria-label="Second Group">
+                        <button type="button" class="btn btn-icon btn-outline-success" routerLink="/admin/task/details/{{task.id}}"><i class="la la-eye" ></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-warning" routerLink="/admin/task/edit/{{task.id}}"><i class="la la-pencil"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-info" routerLink="/admin/task/reassign/{{task.id}}"><i class="la la-user"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-warning" (click)="cancel(task.id)"><i class="la la-ban"></i></button>
+                        <button type="button" class="btn btn-icon btn-outline-danger" (click)="delete(task.id)"><i class="la la-close"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls class="my-pagination" (pageChange)="nextPage($event)" id="task"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <toaster-container [toasterconfig]="config1"></toaster-container>
+</div>
